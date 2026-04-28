@@ -1,0 +1,31 @@
+namespace FilesPlusPlus.Core.Tests;
+
+internal sealed class TemporaryDirectory : IDisposable
+{
+    public TemporaryDirectory()
+    {
+        Path = System.IO.Path.Combine(
+            System.IO.Path.GetTempPath(),
+            "filesplusplus-tests",
+            Guid.NewGuid().ToString("N"));
+
+        Directory.CreateDirectory(Path);
+    }
+
+    public string Path { get; }
+
+    public void Dispose()
+    {
+        try
+        {
+            if (Directory.Exists(Path))
+            {
+                Directory.Delete(Path, recursive: true);
+            }
+        }
+        catch
+        {
+            // Why: Teardown must not hide assertion failures when temp files are locked.
+        }
+    }
+}

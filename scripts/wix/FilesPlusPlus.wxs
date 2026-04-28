@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package
+    Name="Files++"
+    Manufacturer="Files++"
+    Version="$(var.ProductVersion)"
+    UpgradeCode="D674CA6F-0EBA-4F2B-8A3A-B8A7A97A0456"
+    Language="1033">
+    <MajorUpgrade DowngradeErrorMessage="A newer version of Files++ is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <StandardDirectory Id="ProgramFiles64Folder">
+      <Directory Id="INSTALLFOLDER" Name="FilesPlusPlus" />
+    </StandardDirectory>
+
+    <Feature Id="MainFeature" Title="Files++" Level="1">
+      <ComponentGroupRef Id="AppFiles" />
+    </Feature>
+  </Package>
+
+  <Fragment>
+    <ComponentGroup Id="AppFiles" Directory="INSTALLFOLDER">
+      <Files Include="$(var.PublishDir)\**" />
+    </ComponentGroup>
+  </Fragment>
+</Wix>

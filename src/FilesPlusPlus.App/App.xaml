@@ -1,0 +1,586 @@
+<Application
+    x:Class="FilesPlusPlus.App.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:local="using:FilesPlusPlus.App.Converters">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <controls:XamlControlsResources />
+                <ResourceDictionary Source="Themes/ShellBrushes.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <local:NullToVisibilityConverter x:Key="NullToCollapsedConverter" />
+            <local:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+            <local:FileItemGlyphConverter x:Key="FileItemGlyphConverter" />
+            <local:FileItemTintBrushConverter x:Key="FileItemTintBrushConverter" />
+            <local:FilePathToImageSourceConverter x:Key="FilePathToImageSourceConverter" />
+            <local:FilePathToMediaSourceConverter x:Key="FilePathToMediaSourceConverter" />
+            <local:ZeroCountToVisibilityConverter x:Key="ZeroCountToVisibilityConverter" />
+            <local:ViewModeToVisibilityConverter x:Key="ViewModeToVisibilityConverter" />
+
+            <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+                <Setter Property="UseSystemFocusVisuals" Value="True" />
+                <Setter Property="FontFamily" Value="Segoe UI" />
+                <Setter Property="FontSize" Value="12" />
+            </Style>
+            <Style TargetType="ToggleButton" BasedOn="{StaticResource DefaultToggleButtonStyle}">
+                <Setter Property="UseSystemFocusVisuals" Value="True" />
+                <Setter Property="FontFamily" Value="Segoe UI" />
+                <Setter Property="FontSize" Value="12" />
+            </Style>
+            <Style TargetType="TextBlock">
+                <Setter Property="FontFamily" Value="Segoe UI" />
+                <Setter Property="FontSize" Value="12" />
+            </Style>
+
+            
+            <!-- Section: Shell glass command styles -->
+            <Style x:Key="ShellGlassButtonStyle" TargetType="Button">
+                <Setter Property="UseSystemFocusVisuals" Value="True" />
+                <Setter Property="FontFamily" Value="Segoe UI" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="Padding" Value="12,5,12,6" />
+                <Setter Property="MinHeight" Value="28" />
+                <Setter Property="CornerRadius" Value="14" />
+                <Setter Property="Background" Value="{ThemeResource ShellButtonBackgroundBrush}" />
+                <Setter Property="BorderBrush" Value="{ThemeResource ShellButtonBorderBrush}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="Foreground" Value="{ThemeResource ShellButtonForegroundBrush}" />
+                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Grid x:Name="LayoutRoot">
+                                <Border
+                                    x:Name="BackgroundLayer"
+                                    CornerRadius="{TemplateBinding CornerRadius}"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}" />
+                                <Rectangle
+                                    x:Name="WetEdge"
+                                    VerticalAlignment="Top"
+                                    Height="2"
+                                    Margin="4,1,4,0"
+                                    RadiusX="1"
+                                    RadiusY="1"
+                                    Fill="{ThemeResource ShellGlossButtonHighlightBrush}"
+                                    IsHitTestVisible="False" />
+                                <ContentPresenter
+                                    x:Name="ContentPresenter"
+                                    Content="{TemplateBinding Content}"
+                                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                                    ContentTransitions="{TemplateBinding ContentTransitions}"
+                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    Padding="{TemplateBinding Padding}"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    AutomationProperties.AccessibilityView="Raw" />
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualStateGroup.Transitions>
+                                            <VisualTransition To="PointerOver" GeneratedDuration="0:0:0.07" />
+                                            <VisualTransition To="Pressed" GeneratedDuration="0:0:0.06" />
+                                            <VisualTransition GeneratedDuration="0:0:0.08" />
+                                        </VisualStateGroup.Transitions>
+                                        <VisualState x:Name="Normal" />
+                                        <VisualState x:Name="PointerOver">
+                                            <VisualState.Setters>
+                                                <Setter Target="BackgroundLayer.BorderBrush" Value="{ThemeResource ShellAeroAccentGlowBorderBrush}" />
+                                                <Setter Target="BackgroundLayer.Background" Value="{ThemeResource ShellButtonHoverBackgroundBrush}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <VisualState.Setters>
+                                                <Setter Target="BackgroundLayer.BorderBrush" Value="{ThemeResource ShellAeroAccentGlowBorderBrush}" />
+                                                <Setter Target="BackgroundLayer.Background" Value="{ThemeResource ShellButtonPressedBackgroundBrush}" />
+                                                <Setter Target="WetEdge.Opacity" Value="0.3" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled">
+                                            <VisualState.Setters>
+                                                <Setter Target="LayoutRoot.Opacity" Value="0.5" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            
+            <Style x:Key="ShellGlassToggleButtonStyle" TargetType="ToggleButton">
+                <Setter Property="UseSystemFocusVisuals" Value="True" />
+                <Setter Property="FontFamily" Value="Segoe UI" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="Padding" Value="12,5,12,6" />
+                <Setter Property="MinHeight" Value="28" />
+                <Setter Property="CornerRadius" Value="14" />
+                <Setter Property="Background" Value="{ThemeResource ShellButtonBackgroundBrush}" />
+                <Setter Property="BorderBrush" Value="{ThemeResource ShellButtonBorderBrush}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="Foreground" Value="{ThemeResource ShellButtonForegroundBrush}" />
+                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ToggleButton">
+                            <Grid x:Name="LayoutRoot">
+                                <Border
+                                    x:Name="BackgroundLayer"
+                                    CornerRadius="{TemplateBinding CornerRadius}"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}" />
+                                <Border
+                                    x:Name="CheckedLayer"
+                                    CornerRadius="{TemplateBinding CornerRadius}"
+                                    Background="{ThemeResource ShellAeroAccentGlowBrush}"
+                                    BorderBrush="{ThemeResource ShellAeroAccentGlowBorderBrush}"
+                                    BorderThickness="1"
+                                    Opacity="0"
+                                    IsHitTestVisible="False" />
+                                <Rectangle
+                                    x:Name="WetEdge"
+                                    VerticalAlignment="Top"
+                                    Height="2"
+                                    Margin="4,1,4,0"
+                                    RadiusX="1"
+                                    RadiusY="1"
+                                    Fill="{ThemeResource ShellGlossButtonHighlightBrush}"
+                                    IsHitTestVisible="False" />
+                                <ContentPresenter
+                                    x:Name="ContentPresenter"
+                                    Content="{TemplateBinding Content}"
+                                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                                    ContentTransitions="{TemplateBinding ContentTransitions}"
+                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    Padding="{TemplateBinding Padding}"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    AutomationProperties.AccessibilityView="Raw" />
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualStateGroup.Transitions>
+                                            <VisualTransition To="PointerOver" GeneratedDuration="0:0:0.07" />
+                                            <VisualTransition To="CheckedPointerOver" GeneratedDuration="0:0:0.07" />
+                                            <VisualTransition To="Pressed" GeneratedDuration="0:0:0.06" />
+                                            <VisualTransition To="CheckedPressed" GeneratedDuration="0:0:0.06" />
+                                            <VisualTransition To="Checked" GeneratedDuration="0:0:0.095" />
+                                            <VisualTransition GeneratedDuration="0:0:0.08" />
+                                        </VisualStateGroup.Transitions>
+                                        <VisualState x:Name="Normal" />
+                                        <VisualState x:Name="PointerOver">
+                                            <VisualState.Setters>
+                                                <Setter Target="BackgroundLayer.BorderBrush" Value="{ThemeResource ShellAeroAccentGlowBorderBrush}" />
+                                                <Setter Target="BackgroundLayer.Background" Value="{ThemeResource ShellButtonHoverBackgroundBrush}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <VisualState.Setters>
+                                                <Setter Target="BackgroundLayer.BorderBrush" Value="{ThemeResource ShellAeroAccentGlowBorderBrush}" />
+                                                <Setter Target="BackgroundLayer.Background" Value="{ThemeResource ShellButtonPressedBackgroundBrush}" />
+                                                <Setter Target="WetEdge.Opacity" Value="0.3" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled">
+                                            <VisualState.Setters>
+                                                <Setter Target="LayoutRoot.Opacity" Value="0.5" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Checked">
+                                            <VisualState.Setters>
+                                                <Setter Target="CheckedLayer.Opacity" Value="1" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="CheckedPointerOver">
+                                            <VisualState.Setters>
+                                                <Setter Target="CheckedLayer.Opacity" Value="1" />
+                                                <Setter Target="BackgroundLayer.BorderBrush" Value="{ThemeResource ShellAeroAccentGlowBorderBrush}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="CheckedPressed">
+                                            <VisualState.Setters>
+                                                <Setter Target="CheckedLayer.Opacity" Value="0.85" />
+                                                <Setter Target="WetEdge.Opacity" Value="0.4" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="CheckedDisabled">
+                                            <VisualState.Setters>
+                                                <Setter Target="LayoutRoot.Opacity" Value="0.5" />
+                                                <Setter Target="CheckedLayer.Opacity" Value="1" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Indeterminate" />
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            
+            <Style x:Key="ShellGlassPrimaryButtonStyle" TargetType="Button" BasedOn="{StaticResource ShellGlassButtonStyle}">
+                <Setter Property="Background" Value="{ThemeResource ShellCommandPrimaryButtonBackgroundBrush}" />
+                <Setter Property="Foreground" Value="{ThemeResource ShellCommandPrimaryButtonForegroundBrush}" />
+                <Setter Property="BorderBrush" Value="{ThemeResource ShellAeroAccentGlowBorderBrush}" />
+                <Setter Property="Padding" Value="14,6,16,6" />
+                <Setter Property="MinHeight" Value="30" />
+                <Setter Property="CornerRadius" Value="15" />
+            </Style>
+
+            <!-- Section: Menu flyout styles -->
+            <Style x:Key="ShellMenuFlyoutPresenterStyle" TargetType="MenuFlyoutPresenter">
+                <Setter Property="Background" Value="{ThemeResource ShellMenuFlyoutBackgroundBrush}" />
+                <Setter Property="BorderBrush" Value="{ThemeResource ShellMenuFlyoutBorderBrush}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="Padding" Value="2,4" />
+                <Setter Property="Foreground" Value="{ThemeResource ShellMenuFlyoutForegroundBrush}" />
+                <Setter Property="FontFamily" Value="Segoe UI" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="MinWidth" Value="180" />
+                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="MenuFlyoutPresenter">
+                            <Border
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}">
+                                <Grid>
+                                    <Rectangle
+                                        VerticalAlignment="Top"
+                                        Height="2"
+                                        Margin="4,1,4,0"
+                                        RadiusX="1"
+                                        RadiusY="1"
+                                        Fill="{ThemeResource ShellPanelHighlightStripBrush}"
+                                        IsHitTestVisible="False" />
+                                    <ScrollViewer
+                                        x:Name="MenuFlyoutPresenterScrollViewer"
+                                        Margin="{TemplateBinding Padding}"
+                                        HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
+                                        HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                        VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
+                                        VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+                                        AutomationProperties.AccessibilityView="Raw">
+                                        <ItemsPresenter />
+                                    </ScrollViewer>
+                                </Grid>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style TargetType="MenuFlyoutPresenter" BasedOn="{StaticResource ShellMenuFlyoutPresenterStyle}" />
+
+            <Style TargetType="MenuFlyoutItem">
+                <Setter Property="Foreground" Value="{ThemeResource ShellMenuFlyoutForegroundBrush}" />
+                <Setter Property="FontFamily" Value="Segoe UI" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="Padding" Value="12,6,14,6" />
+                <Setter Property="UseSystemFocusVisuals" Value="True" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="MenuFlyoutItem">
+                            <Grid x:Name="LayoutRoot" Padding="2,1" Background="Transparent">
+                                <Border
+                                    x:Name="HoverBackground"
+                                    CornerRadius="6"
+                                    Background="Transparent"
+                                    BorderThickness="1"
+                                    BorderBrush="Transparent" />
+                                <Grid Padding="{TemplateBinding Padding}" ColumnSpacing="10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Viewbox
+                                        Grid.Column="0"
+                                        Width="14"
+                                        Height="14"
+                                        VerticalAlignment="Center"
+                                        Visibility="Collapsed">
+                                        <ContentPresenter x:Name="IconRoot" Content="{TemplateBinding Icon}" />
+                                    </Viewbox>
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        Text="{TemplateBinding Text}"
+                                        Foreground="{TemplateBinding Foreground}"
+                                        VerticalAlignment="Center"
+                                        TextTrimming="CharacterEllipsis" />
+                                    <TextBlock
+                                        Grid.Column="2"
+                                        x:Name="KeyboardAcceleratorTextBlock"
+                                        Text="{TemplateBinding KeyboardAcceleratorTextOverride}"
+                                        Foreground="{ThemeResource ShellMenuFlyoutSecondaryForegroundBrush}"
+                                        FontSize="11"
+                                        VerticalAlignment="Center"
+                                        Margin="12,0,0,0" />
+                                </Grid>
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualStateGroup.Transitions>
+                                            <VisualTransition To="PointerOver" GeneratedDuration="0:0:0.07" />
+                                            <VisualTransition To="Pressed" GeneratedDuration="0:0:0.06" />
+                                            <VisualTransition GeneratedDuration="0:0:0.08" />
+                                        </VisualStateGroup.Transitions>
+                                        <VisualState x:Name="Normal" />
+                                        <VisualState x:Name="PointerOver">
+                                            <VisualState.Setters>
+                                                <Setter Target="HoverBackground.Background" Value="{ThemeResource ShellMenuFlyoutItemHoverBrush}" />
+                                                <Setter Target="HoverBackground.BorderBrush" Value="{ThemeResource ShellMenuFlyoutItemHoverBorderBrush}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <VisualState.Setters>
+                                                <Setter Target="HoverBackground.Background" Value="{ThemeResource ShellMenuFlyoutItemPressedBrush}" />
+                                                <Setter Target="HoverBackground.BorderBrush" Value="{ThemeResource ShellMenuFlyoutItemHoverBorderBrush}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled">
+                                            <VisualState.Setters>
+                                                <Setter Target="LayoutRoot.Opacity" Value="0.45" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="CheckPlaceholderStates">
+                                        <VisualState x:Name="NoPlaceholder" />
+                                        <VisualState x:Name="CheckPlaceholder" />
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="PaddingSizeStates">
+                                        <VisualState x:Name="DefaultPadding" />
+                                        <VisualState x:Name="NarrowPadding" />
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style TargetType="MenuFlyoutSeparator">
+                <Setter Property="Background" Value="{ThemeResource ShellMenuFlyoutSeparatorBrush}" />
+                <Setter Property="Height" Value="1" />
+                <Setter Property="Margin" Value="8,4,8,4" />
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="MenuFlyoutSeparator">
+                            <Rectangle Height="1" Margin="{TemplateBinding Margin}" Fill="{ThemeResource ShellMenuFlyoutSeparatorBrush}" Opacity="0.85" />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            
+            <!-- Section: File item container styles -->
+            <Style x:Key="ShellListViewItemStyle" TargetType="ListViewItem">
+                <Setter Property="FontFamily" Value="Segoe UI" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Foreground" Value="{ThemeResource TextFillColorPrimaryBrush}" />
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="Margin" Value="2,2" />
+                <Setter Property="MinHeight" Value="0" />
+                <Setter Property="UseSystemFocusVisuals" Value="True" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListViewItem">
+                            <Grid x:Name="LayoutRoot">
+                                <Border
+                                    x:Name="HoverBackground"
+                                    CornerRadius="7"
+                                    Background="Transparent"
+                                    BorderThickness="1"
+                                    BorderBrush="Transparent" />
+                                <Border
+                                    x:Name="SelectedBackground"
+                                    CornerRadius="7"
+                                    Background="{ThemeResource ShellSelectionBackgroundBrush}"
+                                    BorderBrush="{ThemeResource ShellSelectionBorderBrush}"
+                                    BorderThickness="1"
+                                    Opacity="0" />
+                                <Rectangle
+                                    x:Name="AccentRail"
+                                    HorizontalAlignment="Left"
+                                    Width="2"
+                                    Margin="4,4,0,4"
+                                    RadiusX="1"
+                                    RadiusY="1"
+                                    Fill="{ThemeResource ShellSelectionBorderBrush}"
+                                    Opacity="0"
+                                    IsHitTestVisible="False" />
+                                <ContentPresenter
+                                    x:Name="ContentPresenter"
+                                    Content="{TemplateBinding Content}"
+                                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                                    ContentTransitions="{TemplateBinding ContentTransitions}"
+                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    Margin="{TemplateBinding Padding}" />
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualStateGroup.Transitions>
+                                            <VisualTransition To="PointerOver" GeneratedDuration="0:0:0.07" />
+                                            <VisualTransition To="PointerOverSelected" GeneratedDuration="0:0:0.07" />
+                                            <VisualTransition To="Pressed" GeneratedDuration="0:0:0.06" />
+                                            <VisualTransition To="PressedSelected" GeneratedDuration="0:0:0.06" />
+                                            <VisualTransition To="Selected" GeneratedDuration="0:0:0.095" />
+                                            <VisualTransition GeneratedDuration="0:0:0.08" />
+                                        </VisualStateGroup.Transitions>
+                                        <VisualState x:Name="Normal" />
+                                        <VisualState x:Name="PointerOver">
+                                            <VisualState.Setters>
+                                                <Setter Target="HoverBackground.Background" Value="{ThemeResource ShellListItemHoverBackgroundBrush}" />
+                                                <Setter Target="HoverBackground.BorderBrush" Value="{ThemeResource ShellListItemHoverBorderBrush}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <VisualState.Setters>
+                                                <Setter Target="HoverBackground.Background" Value="{ThemeResource ShellButtonPressedBackgroundBrush}" />
+                                                <Setter Target="HoverBackground.BorderBrush" Value="{ThemeResource ShellListItemHoverBorderBrush}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Selected">
+                                            <VisualState.Setters>
+                                                <Setter Target="SelectedBackground.Opacity" Value="1" />
+                                                <Setter Target="AccentRail.Opacity" Value="1" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="PointerOverSelected">
+                                            <VisualState.Setters>
+                                                <Setter Target="SelectedBackground.Opacity" Value="1" />
+                                                <Setter Target="HoverBackground.Background" Value="{ThemeResource ShellListItemHoverBackgroundBrush}" />
+                                                <Setter Target="AccentRail.Opacity" Value="1" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="PressedSelected">
+                                            <VisualState.Setters>
+                                                <Setter Target="SelectedBackground.Opacity" Value="1" />
+                                                <Setter Target="HoverBackground.Background" Value="{ThemeResource ShellButtonPressedBackgroundBrush}" />
+                                                <Setter Target="AccentRail.Opacity" Value="1" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled">
+                                            <VisualState.Setters>
+                                                <Setter Target="LayoutRoot.Opacity" Value="0.45" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="ShellGridViewItemStyle" TargetType="GridViewItem">
+                <Setter Property="FontFamily" Value="Segoe UI" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Foreground" Value="{ThemeResource TextFillColorPrimaryBrush}" />
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="Margin" Value="3,3" />
+                <Setter Property="UseSystemFocusVisuals" Value="True" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="GridViewItem">
+                            <Grid x:Name="LayoutRoot">
+                                <Border
+                                    x:Name="HoverBackground"
+                                    CornerRadius="7"
+                                    Background="Transparent"
+                                    BorderThickness="1"
+                                    BorderBrush="Transparent" />
+                                <Border
+                                    x:Name="SelectedBackground"
+                                    CornerRadius="7"
+                                    Background="{ThemeResource ShellSelectionBackgroundBrush}"
+                                    BorderBrush="{ThemeResource ShellSelectionBorderBrush}"
+                                    BorderThickness="1"
+                                    Opacity="0" />
+                                <ContentPresenter
+                                    x:Name="ContentPresenter"
+                                    Content="{TemplateBinding Content}"
+                                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                                    ContentTransitions="{TemplateBinding ContentTransitions}"
+                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    Margin="{TemplateBinding Padding}" />
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualStateGroup.Transitions>
+                                            <VisualTransition To="PointerOver" GeneratedDuration="0:0:0.07" />
+                                            <VisualTransition To="PointerOverSelected" GeneratedDuration="0:0:0.07" />
+                                            <VisualTransition To="Pressed" GeneratedDuration="0:0:0.06" />
+                                            <VisualTransition To="PressedSelected" GeneratedDuration="0:0:0.06" />
+                                            <VisualTransition To="Selected" GeneratedDuration="0:0:0.095" />
+                                            <VisualTransition GeneratedDuration="0:0:0.08" />
+                                        </VisualStateGroup.Transitions>
+                                        <VisualState x:Name="Normal" />
+                                        <VisualState x:Name="PointerOver">
+                                            <VisualState.Setters>
+                                                <Setter Target="HoverBackground.Background" Value="{ThemeResource ShellListItemHoverBackgroundBrush}" />
+                                                <Setter Target="HoverBackground.BorderBrush" Value="{ThemeResource ShellListItemHoverBorderBrush}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <VisualState.Setters>
+                                                <Setter Target="HoverBackground.Background" Value="{ThemeResource ShellButtonPressedBackgroundBrush}" />
+                                                <Setter Target="HoverBackground.BorderBrush" Value="{ThemeResource ShellListItemHoverBorderBrush}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Selected">
+                                            <VisualState.Setters>
+                                                <Setter Target="SelectedBackground.Opacity" Value="1" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="PointerOverSelected">
+                                            <VisualState.Setters>
+                                                <Setter Target="SelectedBackground.Opacity" Value="1" />
+                                                <Setter Target="HoverBackground.Background" Value="{ThemeResource ShellListItemHoverBackgroundBrush}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="PressedSelected">
+                                            <VisualState.Setters>
+                                                <Setter Target="SelectedBackground.Opacity" Value="1" />
+                                                <Setter Target="HoverBackground.Background" Value="{ThemeResource ShellButtonPressedBackgroundBrush}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled">
+                                            <VisualState.Setters>
+                                                <Setter Target="LayoutRoot.Opacity" Value="0.45" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="ShellAeroSeparatorStyle" TargetType="Border">
+                <Setter Property="Width" Value="1" />
+                <Setter Property="Background" Value="{ThemeResource ShellGlassEdgeSeparatorBrush}" />
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="VerticalAlignment" Value="Stretch" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
+
