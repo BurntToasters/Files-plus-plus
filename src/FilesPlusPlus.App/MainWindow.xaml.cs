@@ -719,6 +719,11 @@ public sealed partial class MainWindow : Window
         RunUiAction("Create folder", () => ViewModel.CreateFolderAsync());
     }
 
+    private void NewSplitButton_Click(SplitButton sender, SplitButtonClickEventArgs args)
+    {
+        RunUiAction("Create folder", () => ViewModel.CreateFolderAsync());
+    }
+
     private void Copy_Click(object sender, RoutedEventArgs e)
     {
         RunUiAction("Copy selection", () => ViewModel.CopySelectionAsync());
@@ -752,9 +757,64 @@ public sealed partial class MainWindow : Window
         UpdateViewModeButtons();
     }
 
-    private void DetailsPaneToggleButton_Click(object sender, RoutedEventArgs e)
+    private void DetailsPaneToggleMenuItem_Click(object sender, RoutedEventArgs e)
     {
-        SetDetailsPaneVisibility(DetailsPaneToggleButton.IsChecked != false);
+        SetDetailsPaneVisibility(DetailsPaneToggleItem.IsChecked);
+    }
+
+    private void NewTextFileMenuItem_Click(object sender, RoutedEventArgs e)
+    {
+        RunUiAction("Create file", () => ViewModel.CreateFileAsync());
+    }
+
+    private void SortFlyout_Opening(object sender, object e)
+    {
+        var viewState = ViewModel.SelectedTab?.ViewState;
+        if (viewState is null)
+        {
+            return;
+        }
+
+        SortNameRadio.IsChecked = viewState.SortColumn == SortColumn.Name;
+        SortTypeRadio.IsChecked = viewState.SortColumn == SortColumn.Type;
+        SortDateRadio.IsChecked = viewState.SortColumn == SortColumn.DateModified;
+        SortSizeRadio.IsChecked = viewState.SortColumn == SortColumn.Size;
+
+        SortAscRadio.IsChecked = viewState.SortDirection == SortDirection.Ascending;
+        SortDescRadio.IsChecked = viewState.SortDirection == SortDirection.Descending;
+
+        GroupFoldersToggle.IsChecked = viewState.GroupDirectoriesFirst;
+    }
+
+    private void SortColumnRadio_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is not FrameworkElement element ||
+            element.Tag is not string tag ||
+            !Enum.TryParse<SortColumn>(tag, ignoreCase: true, out var column))
+        {
+            return;
+        }
+
+        var direction = ViewModel.SelectedTab?.ViewState.SortDirection ?? SortDirection.Ascending;
+        ViewModel.SetSort(column, direction);
+    }
+
+    private void SortDirectionRadio_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is not FrameworkElement element ||
+            element.Tag is not string tag ||
+            !Enum.TryParse<SortDirection>(tag, ignoreCase: true, out var direction))
+        {
+            return;
+        }
+
+        var column = ViewModel.SelectedTab?.ViewState.SortColumn ?? SortColumn.Name;
+        ViewModel.SetSort(column, direction);
+    }
+
+    private void GroupFoldersToggle_Click(object sender, RoutedEventArgs e)
+    {
+        ViewModel.SetDirectoryGrouping(GroupFoldersToggle.IsChecked);
     }
 
     private void SyncPaneLayout_Click(object sender, RoutedEventArgs e)
@@ -1422,8 +1482,7 @@ public sealed partial class MainWindow : Window
 
     private void UpdateDetailsPaneToggleButton()
     {
-        DetailsPaneToggleButton.IsChecked = _isDetailsPaneVisible;
-        DetailsPaneToggleButton.Content = _isDetailsPaneVisible ? "Hide Pane" : "Show Pane";
+        DetailsPaneToggleItem.IsChecked = _isDetailsPaneVisible;
     }
 
     private AppWindow? GetAppWindow()
@@ -1466,9 +1525,9 @@ public sealed partial class MainWindow : Window
     {
         var viewMode = ViewModel.SelectedTab?.ViewState.ViewMode ?? FolderViewMode.Details;
 
-        DetailsViewButton.IsChecked = viewMode == FolderViewMode.Details;
-        CompactViewButton.IsChecked = viewMode == FolderViewMode.Compact;
-        IconsViewButton.IsChecked = viewMode == FolderViewMode.Icons;
+        ViewDetailsRadio.IsChecked = viewMode == FolderViewMode.Details;
+        ViewCompactRadio.IsChecked = viewMode == FolderViewMode.Compact;
+        ViewIconsRadio.IsChecked = viewMode == FolderViewMode.Icons;
     }
 
     private void DetailsSplitter_PointerPressed(object sender, PointerRoutedEventArgs e)

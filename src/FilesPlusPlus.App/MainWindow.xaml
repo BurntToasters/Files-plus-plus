@@ -195,35 +195,129 @@
         <Border Grid.Row="3" Margin="10,0,10,7" CornerRadius="6" BorderThickness="1" BorderBrush="{ThemeResource ShellCommandStripBorderBrush}" Background="{ThemeResource ShellCommandStripBackgroundBrush}">
             <Grid>
                 <Rectangle VerticalAlignment="Top" Height="2" Margin="6,1,6,0" RadiusX="1" RadiusY="1" Fill="{ThemeResource ShellPanelHighlightStripBrush}" IsHitTestVisible="False" />
-                <Grid Padding="8,4">
+                <Grid Padding="8,5" ColumnSpacing="8">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <Button
-                        Grid.Column="0"
-                        Style="{StaticResource ShellGlassPrimaryButtonStyle}"
-                        Click="CreateFolder_Click">
-                        <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
-                            <FontIcon Glyph="&#xE710;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="13" Foreground="{ThemeResource ShellCommandPrimaryButtonForegroundBrush}" />
-                            <TextBlock Text="Add New" FontWeight="SemiBold" FontSize="11" Foreground="{ThemeResource ShellCommandPrimaryButtonForegroundBrush}" VerticalAlignment="Center" />
-                        </StackPanel>
-                    </Button>
+                    
+                    <!-- Section: New + edit actions -->
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                        <SplitButton Height="32" CornerRadius="6" Click="NewSplitButton_Click" ToolTipService.ToolTip="New (creates a folder)" AutomationProperties.Name="New">
+                            <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                <FontIcon Glyph="&#xE710;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="13" />
+                                <TextBlock Text="New" FontWeight="SemiBold" FontSize="12" VerticalAlignment="Center" />
+                            </StackPanel>
+                            <SplitButton.Flyout>
+                                <MenuFlyout Placement="BottomEdgeAlignedLeft">
+                                    <MenuFlyoutItem Text="New folder" Click="NewFolderMenuItem_Click">
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon Glyph="&#xE8B7;" FontFamily="{ThemeResource SymbolThemeFontFamily}" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+                                    <MenuFlyoutItem Text="New text document" Click="NewTextFileMenuItem_Click">
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon Glyph="&#xE8A5;" FontFamily="{ThemeResource SymbolThemeFontFamily}" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+                                </MenuFlyout>
+                            </SplitButton.Flyout>
+                        </SplitButton>
 
-                    <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="6">
-                        <Button Style="{StaticResource ShellGlassButtonStyle}" Content="Copy" Click="Copy_Click" />
-                        <Button Style="{StaticResource ShellGlassButtonStyle}" Content="Cut" Click="Cut_Click" />
-                        <Button Style="{StaticResource ShellGlassButtonStyle}" Content="Paste" Click="Paste_Click" />
-                        <ToggleButton x:Name="DetailsViewButton" Style="{StaticResource ShellGlassToggleButtonStyle}" Content="Details" Click="DetailsViewButton_Click" />
-                        <ToggleButton x:Name="CompactViewButton" Style="{StaticResource ShellGlassToggleButtonStyle}" Content="Compact" Click="CompactViewButton_Click" />
-                        <ToggleButton x:Name="IconsViewButton" Style="{StaticResource ShellGlassToggleButtonStyle}" Content="Icons" Click="IconsViewButton_Click" />
-                        <ToggleButton x:Name="DetailsPaneToggleButton" Style="{StaticResource ShellGlassToggleButtonStyle}" Content="Hide Pane" IsChecked="True" Click="DetailsPaneToggleButton_Click" />
-                        <Button Style="{StaticResource ShellGlassButtonStyle}" Content="Sync Pane" Click="SyncPaneLayout_Click" ToolTipService.ToolTip="Apply current pane layout to all tabs" />
-                        <Button Style="{StaticResource ShellGlassButtonStyle}" AutomationProperties.Name="Keyboard shortcuts help" Content="Shortcuts" Click="ShortcutsHelp_Click" ToolTipService.ToolTip="Show keyboard shortcuts (F1)" />
-                        <Button Style="{StaticResource ShellGlassButtonStyle}" Width="34" Height="32" Padding="0" CornerRadius="6" Click="OpenSettings_Click" ToolTipService.ToolTip="Settings" AutomationProperties.Name="Open settings">
-                            <FontIcon Glyph="&#xE713;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="14" />
+                        <Border Width="1" Height="20" Margin="2,0" VerticalAlignment="Center" Background="{ThemeResource ShellGlassEdgeSeparatorBrush}" Opacity="0.55" />
+
+                        <Button Style="{StaticResource ShellGlassButtonStyle}" Width="34" Height="32" Padding="0" CornerRadius="6" Click="Cut_Click" ToolTipService.ToolTip="Cut (Ctrl+X)" AutomationProperties.Name="Cut">
+                            <FontIcon Glyph="&#xE8C6;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="14" Foreground="{ThemeResource ShellIconForegroundBrush}" />
+                        </Button>
+                        <Button Style="{StaticResource ShellGlassButtonStyle}" Width="34" Height="32" Padding="0" CornerRadius="6" Click="Copy_Click" ToolTipService.ToolTip="Copy (Ctrl+C)" AutomationProperties.Name="Copy">
+                            <FontIcon Glyph="&#xE8C8;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="14" Foreground="{ThemeResource ShellIconForegroundBrush}" />
+                        </Button>
+                        <Button Style="{StaticResource ShellGlassButtonStyle}" Width="34" Height="32" Padding="0" CornerRadius="6" Click="Paste_Click" ToolTipService.ToolTip="Paste (Ctrl+V)" AutomationProperties.Name="Paste">
+                            <FontIcon Glyph="&#xE77F;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="14" Foreground="{ThemeResource ShellIconForegroundBrush}" />
+                        </Button>
+                        <Button Style="{StaticResource ShellGlassButtonStyle}" Width="34" Height="32" Padding="0" CornerRadius="6" Click="RenameSelectedMenuItem_Click" ToolTipService.ToolTip="Rename (F2)" AutomationProperties.Name="Rename">
+                            <FontIcon Glyph="&#xE8AC;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="14" Foreground="{ThemeResource ShellIconForegroundBrush}" />
+                        </Button>
+                        <Button Style="{StaticResource ShellGlassButtonStyle}" Width="34" Height="32" Padding="0" CornerRadius="6" Click="DeleteSelectedMenuItem_Click" ToolTipService.ToolTip="Delete (Del)" AutomationProperties.Name="Delete">
+                            <FontIcon Glyph="&#xE74D;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="14" Foreground="{ThemeResource ShellIconForegroundBrush}" />
+                        </Button>
+                    </StackPanel>
+
+                    
+                    <!-- Section: View / Sort / overflow -->
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                        <DropDownButton Height="32" CornerRadius="6" ToolTipService.ToolTip="View options" AutomationProperties.Name="View">
+                            <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                <FontIcon Glyph="&#xE8A9;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="13" />
+                                <TextBlock Text="View" FontSize="12" VerticalAlignment="Center" />
+                            </StackPanel>
+                            <DropDownButton.Flyout>
+                                <MenuFlyout Placement="BottomEdgeAlignedRight">
+                                    <RadioMenuFlyoutItem x:Name="ViewDetailsRadio" Text="Details" GroupName="ViewMode" Click="DetailsViewButton_Click">
+                                        <RadioMenuFlyoutItem.Icon>
+                                            <FontIcon Glyph="&#xE179;" FontFamily="{ThemeResource SymbolThemeFontFamily}" />
+                                        </RadioMenuFlyoutItem.Icon>
+                                    </RadioMenuFlyoutItem>
+                                    <RadioMenuFlyoutItem x:Name="ViewCompactRadio" Text="Compact" GroupName="ViewMode" Click="CompactViewButton_Click">
+                                        <RadioMenuFlyoutItem.Icon>
+                                            <FontIcon Glyph="&#xE71D;" FontFamily="{ThemeResource SymbolThemeFontFamily}" />
+                                        </RadioMenuFlyoutItem.Icon>
+                                    </RadioMenuFlyoutItem>
+                                    <RadioMenuFlyoutItem x:Name="ViewIconsRadio" Text="Icons" GroupName="ViewMode" Click="IconsViewButton_Click">
+                                        <RadioMenuFlyoutItem.Icon>
+                                            <FontIcon Glyph="&#xE80A;" FontFamily="{ThemeResource SymbolThemeFontFamily}" />
+                                        </RadioMenuFlyoutItem.Icon>
+                                    </RadioMenuFlyoutItem>
+                                    <MenuFlyoutSeparator />
+                                    <ToggleMenuFlyoutItem x:Name="DetailsPaneToggleItem" Text="Details pane" Click="DetailsPaneToggleMenuItem_Click" />
+                                </MenuFlyout>
+                            </DropDownButton.Flyout>
+                        </DropDownButton>
+
+                        <DropDownButton Height="32" CornerRadius="6" ToolTipService.ToolTip="Sort options" AutomationProperties.Name="Sort">
+                            <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                <FontIcon Glyph="&#xE8CB;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="13" />
+                                <TextBlock Text="Sort" FontSize="12" VerticalAlignment="Center" />
+                            </StackPanel>
+                            <DropDownButton.Flyout>
+                                <MenuFlyout Placement="BottomEdgeAlignedRight" Opening="SortFlyout_Opening">
+                                    <RadioMenuFlyoutItem x:Name="SortNameRadio" Text="Name" GroupName="SortColumn" Click="SortColumnRadio_Click" Tag="Name" />
+                                    <RadioMenuFlyoutItem x:Name="SortTypeRadio" Text="Type" GroupName="SortColumn" Click="SortColumnRadio_Click" Tag="Type" />
+                                    <RadioMenuFlyoutItem x:Name="SortDateRadio" Text="Date modified" GroupName="SortColumn" Click="SortColumnRadio_Click" Tag="DateModified" />
+                                    <RadioMenuFlyoutItem x:Name="SortSizeRadio" Text="Size" GroupName="SortColumn" Click="SortColumnRadio_Click" Tag="Size" />
+                                    <MenuFlyoutSeparator />
+                                    <RadioMenuFlyoutItem x:Name="SortAscRadio" Text="Ascending" GroupName="SortDirection" Click="SortDirectionRadio_Click" Tag="Ascending" />
+                                    <RadioMenuFlyoutItem x:Name="SortDescRadio" Text="Descending" GroupName="SortDirection" Click="SortDirectionRadio_Click" Tag="Descending" />
+                                    <MenuFlyoutSeparator />
+                                    <ToggleMenuFlyoutItem x:Name="GroupFoldersToggle" Text="Folders first" Click="GroupFoldersToggle_Click" />
+                                </MenuFlyout>
+                            </DropDownButton.Flyout>
+                        </DropDownButton>
+
+                        <Button Style="{StaticResource ShellGlassButtonStyle}" Width="34" Height="32" Padding="0" CornerRadius="6" ToolTipService.ToolTip="More" AutomationProperties.Name="More commands">
+                            <FontIcon Glyph="&#xE712;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="14" Foreground="{ThemeResource ShellIconForegroundBrush}" />
+                            <Button.Flyout>
+                                <MenuFlyout Placement="BottomEdgeAlignedRight">
+                                    <MenuFlyoutItem Text="Sync pane layout to all tabs" Click="SyncPaneLayout_Click">
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon Glyph="&#xE895;" FontFamily="{ThemeResource SymbolThemeFontFamily}" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+                                    <MenuFlyoutItem Text="Keyboard shortcuts" Click="ShortcutsHelp_Click">
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon Glyph="&#xE765;" FontFamily="{ThemeResource SymbolThemeFontFamily}" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+                                    <MenuFlyoutSeparator />
+                                    <MenuFlyoutItem Text="Settings" Click="OpenSettings_Click">
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon Glyph="&#xE713;" FontFamily="{ThemeResource SymbolThemeFontFamily}" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+                                </MenuFlyout>
+                            </Button.Flyout>
                         </Button>
                     </StackPanel>
                 </Grid>
@@ -257,12 +351,15 @@
                         <TreeView.ItemTemplate>
                             <DataTemplate>
                                 <TreeViewItem ItemsSource="{Binding Children}" HasUnrealizedChildren="{Binding HasUnrealizedChildren, Mode=OneWay}" IsExpanded="{Binding IsExpanded, Mode=TwoWay}">
-                                    <Grid ColumnSpacing="10">
+                                    <Grid ColumnSpacing="11" Height="30">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="20" />
+                                            <ColumnDefinition Width="22" />
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
-                                        <FontIcon Grid.Column="0" FontSize="15" Glyph="{Binding Glyph}" Foreground="{ThemeResource ShellIconForegroundBrush}" VerticalAlignment="Center" />
+                                        <Grid Grid.Column="0" Width="22" Height="22" VerticalAlignment="Center">
+                                            <FontIcon FontSize="15" Glyph="{Binding Glyph}" Foreground="{ThemeResource ShellAccentBrush}" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding IsSection, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                            <controls:FileThumbnail DisplaySize="18" FilePath="{Binding FullPath}" IsDirectory="True" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding IsNavigable, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                        </Grid>
                                         <TextBlock Grid.Column="1" Text="{Binding Label}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" FontSize="13" FontWeight="{Binding IsSection, Converter={StaticResource SectionToFontWeightConverter}}" />
                                     </Grid>
                                 </TreeViewItem>

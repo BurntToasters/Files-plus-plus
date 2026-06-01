@@ -458,7 +458,11 @@ public sealed partial class MainWindowViewModel : ObservableObject
 
     public void SortCurrent(SortColumn sortColumn) => SelectedTab?.ToggleSort(sortColumn);
 
+    public void SetSort(SortColumn sortColumn, SortDirection direction) => SelectedTab?.SetSort(sortColumn, direction);
+
     public void ToggleDirectoryGrouping() => SelectedTab?.ToggleDirectoryGrouping();
+
+    public void SetDirectoryGrouping(bool groupDirectoriesFirst) => SelectedTab?.SetDirectoryGrouping(groupDirectoriesFirst);
 
     public void SetCurrentViewMode(FolderViewMode viewMode) => SelectedTab?.SetViewMode(viewMode);
 
@@ -631,6 +635,30 @@ public sealed partial class MainWindowViewModel : ObservableObject
         Directory.CreateDirectory(candidate);
         await SelectedTab.RefreshAsync(cancellationToken);
         PublishStatus($"Created folder: {Path.GetFileName(candidate)}");
+    }
+
+    public async Task CreateFileAsync(CancellationToken cancellationToken = default)
+    {
+        if (SelectedTab is null || string.IsNullOrWhiteSpace(SelectedTab.CurrentPath))
+        {
+            return;
+        }
+
+        var basePath = SelectedTab.CurrentPath;
+        const string baseName = "New Text Document";
+        const string extension = ".txt";
+        var candidate = Path.Combine(basePath, baseName + extension);
+        var index = 1;
+
+        while (File.Exists(candidate))
+        {
+            index++;
+            candidate = Path.Combine(basePath, $"{baseName} ({index}){extension}");
+        }
+
+        await File.WriteAllTextAsync(candidate, string.Empty, cancellationToken);
+        await SelectedTab.RefreshAsync(cancellationToken);
+        PublishStatus($"Created file: {Path.GetFileName(candidate)}");
     }
 
     public async Task PersistSessionAsync(WindowLayout windowLayout, CancellationToken cancellationToken = default)

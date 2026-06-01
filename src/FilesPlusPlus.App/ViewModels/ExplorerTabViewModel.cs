@@ -361,6 +361,28 @@ public sealed partial class ExplorerTabViewModel : ObservableObject, IDisposable
         ApplyCurrentView();
     }
 
+    public void SetSort(SortColumn sortColumn, SortDirection direction)
+    {
+        if (_isDisposed)
+        {
+            return;
+        }
+
+        ViewState = ViewState with { SortColumn = sortColumn, SortDirection = direction };
+        ApplyCurrentView();
+    }
+
+    public void SetDirectoryGrouping(bool groupDirectoriesFirst)
+    {
+        if (_isDisposed || ViewState.GroupDirectoriesFirst == groupDirectoriesFirst)
+        {
+            return;
+        }
+
+        ViewState = ViewState with { GroupDirectoriesFirst = groupDirectoriesFirst };
+        ApplyCurrentView();
+    }
+
     public void SetViewMode(FolderViewMode viewMode)
     {
         if (_isDisposed || ViewState.ViewMode == viewMode)
