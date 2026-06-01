@@ -607,9 +607,9 @@ public sealed partial class MainWindow : Window
     {
         var targets = new List<Control>();
 
-        if (SidebarList.Visibility == Visibility.Visible && SidebarList.IsEnabled)
+        if (NavigationTreeView.Visibility == Visibility.Visible && NavigationTreeView.IsEnabled)
         {
-            targets.Add(SidebarList);
+            targets.Add(NavigationTreeView);
         }
 
         var activeFileList = GetActiveFileListControl();
@@ -663,9 +663,9 @@ public sealed partial class MainWindow : Window
 
     private string GetPaneFocusLabel(Control pane)
     {
-        if (ReferenceEquals(pane, SidebarList))
+        if (ReferenceEquals(pane, NavigationTreeView))
         {
-            return "Sidebar";
+            return "Navigation";
         }
 
         if (ReferenceEquals(pane, DetailsPaneScrollViewer))
@@ -962,13 +962,32 @@ public sealed partial class MainWindow : Window
         }
     }
 
-    // Section: Sidebar
+    // Section: Sidebar navigation tree
 
-    private void Sidebar_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    private void NavigationTree_Expanding(TreeView sender, TreeViewExpandingEventArgs args)
     {
-        if (e.AddedItems.Count > 0 && e.AddedItems[0] is SidebarLocation location)
+        if (args.Item is NavigationNode node)
         {
-            RunUiAction("Navigate sidebar", () => ViewModel.NavigateToLocationAsync(location.Path));
+            RunUiAction("Load folder tree", () => ViewModel.LoadNavigationNodeChildrenAsync(node));
+        }
+    }
+
+    private void NavigationTree_ItemInvoked(TreeView sender, TreeViewItemInvokedEventArgs args)
+    {
+        if (args.InvokedItem is not NavigationNode node)
+        {
+            return;
+        }
+
+        if (node.FullPath == MainWindowViewModel.ThisPcVirtualPath)
+        {
+            node.IsExpanded = !node.IsExpanded;
+            return;
+        }
+
+        if (node.IsNavigable)
+        {
+            RunUiAction("Navigate tree", () => ViewModel.NavigateToLocationAsync(node.FullPath!));
         }
     }
 

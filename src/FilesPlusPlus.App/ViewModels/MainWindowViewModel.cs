@@ -60,6 +60,7 @@ public sealed partial class MainWindowViewModel : ObservableObject
         _appSettingsService.Changed += OnAppSettingsChanged;
         ApplySettingsToViewModel(_appSettingsService.Current);
         SeedSidebar();
+        BuildNavigationTree();
     }
 
     public IAppSettingsService AppSettings => _appSettingsService;
@@ -67,6 +68,7 @@ public sealed partial class MainWindowViewModel : ObservableObject
     public ObservableCollection<ExplorerTabViewModel> Tabs { get; } = new();
 
     public ObservableCollection<SidebarLocation> SidebarLocations { get; } = new();
+    public ObservableCollection<NavigationNode> NavigationTree { get; } = new();
     public ObservableCollection<FileOperationEntry> FileOperationHistory { get; } = new();
 
     public Func<FileConflictPrompt, Task<FileConflictResolution>>? ResolveFileConflictAsync { get; set; }
@@ -157,6 +159,7 @@ public sealed partial class MainWindowViewModel : ObservableObject
             if (rebuilt.Count > 0)
             {
                 SidebarLocations.ResetWith(rebuilt);
+                BuildNavigationTree();
             }
         }
 
@@ -223,6 +226,7 @@ public sealed partial class MainWindowViewModel : ObservableObject
         }
 
         SidebarLocations.ResetWith(entries.DistinctBy(location => location.Path));
+        BuildNavigationTree();
     }
 
     private void OnAppSettingsChanged(object? sender, AppSettings settings)
@@ -719,6 +723,207 @@ public sealed partial class MainWindowViewModel : ObservableObject
         }
 
         SidebarLocations.ResetWith(entries.DistinctBy(location => location.Path));
+    }
+
+    private void BuildNavigationTree()
+    {
+        var nodes = new List<NavigationNode>();
+
+        var quickAccessChildren = SidebarLocations
+            .Where(location => !IsDriveRootPath(location.Path))
+            .Where(location => !string.IsNullOrWhiteSpace(location.Path))
+            .Select(location => new NavigationNode(
+                location.Label,
+                location.Path,
+                location.Glyph,
+                canHaveChildren: DirectoryHasSubfolders(location.Path)))
+            .ToList();
+
+        if (quickAccessChildren.Count > 0)
+        {
+            var quickAccess = new NavigationNode("Quick access", null, "\uE734", isSection: true)
+            {
+                IsExpanded = true
+            };
+
+            foreach (var child in quickAccessChildren)
+            {
+                quickAccess.Children.Add(child);
+            }
+
+            nodes.Add(quickAccess);
+        }
+
+        var thisPc = new NavigationNode("This PC", ThisPcVirtualPath, "\uEC4E", isSection: true)
+        {
+            IsExpanded = true
+        };
+
+        foreach (var drive in EnumerateReadyDrives())
+        {
+            thisPc.Children.Add(new NavigationNode(
+                BuildDriveLabel(drive),
+                drive.RootDirectory.FullName,
+                "\uEDA2",
+                canHaveChildren: true));
+        }
+
+        nodes.Add(thisPc);
+
+        NavigationTree.ResetWith(nodes);
+    }
+
+    public const string ThisPcVirtualPath = "::ThisPC";
+
+    public async Task LoadNavigationNodeChildrenAsync(NavigationNode node, CancellationToken cancellationToken = default)
+    {
+        if (node.AreChildrenLoaded || string.IsNullOrWhiteSpace(node.FullPath))
+        {
+            return;
+        }
+
+        // Why: Set early so a second expand event (data-bound trees can raise twice) is a no-op.
+        node.AreChildrenLoaded = true;
+
+        var folderPath = node.FullPath;
+        var showHidden = _appSettingsService.Current.View.ShowHiddenFiles;
+
+        try
+        {
+            var children = await Task.Run(
+                () => EnumerateChildFolders(folderPath, showHidden, cancellationToken),
+                cancellationToken);
+
+            node.Children.Clear();
+            foreach (var child in children)
+            {
+                node.Children.Add(child);
+            }
+
+            node.HasUnrealizedChildren = false;
+        }
+        catch (Exception ex)
+        {
+            node.HasUnrealizedChildren = false;
+            Debug.WriteLine($"Failed to load navigation children for '{folderPath}': {ex}");
+        }
+    }
+
+    private static List<NavigationNode> EnumerateChildFolders(
+        string folderPath,
+        bool showHidden,
+        CancellationToken cancellationToken)
+    {
+        var results = new List<NavigationNode>();
+
+        IEnumerable<string> directories;
+        try
+        {
+            directories = Directory.EnumerateDirectories(folderPath);
+        }
+        catch
+        {
+            return results;
+        }
+
+        foreach (var directory in directories)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            try
+            {
+                var attributes = File.GetAttributes(directory);
+                if (!showHidden && (attributes & (System.IO.FileAttributes.Hidden | System.IO.FileAttributes.System)) != 0)
+                {
+                    continue;
+                }
+
+                results.Add(new NavigationNode(
+                    Path.GetFileName(directory.TrimEnd(Path.DirectorySeparatorChar)),
+                    directory,
+                    "\uE8B7",
+                    canHaveChildren: DirectoryHasSubfolders(directory)));
+            }
+            catch
+            {
+                // Why: Individual folders may deny access; skip them rather than failing the whole load.
+            }
+        }
+
+        return results
+            .OrderBy(node => node.Label, StringComparer.CurrentCultureIgnoreCase)
+            .ToList();
+    }
+
+    private static bool DirectoryHasSubfolders(string path)
+    {
+        try
+        {
+            return Directory.EnumerateDirectories(path).Any();
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private static bool IsDriveRootPath(string path)
+    {
+        try
+        {
+            var root = Path.GetPathRoot(path);
+            return !string.IsNullOrEmpty(root) &&
+                   string.Equals(
+                       root.TrimEnd(Path.DirectorySeparatorChar),
+                       path.TrimEnd(Path.DirectorySeparatorChar),
+                       StringComparison.OrdinalIgnoreCase);
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private static IEnumerable<DriveInfo> EnumerateReadyDrives()
+    {
+        DriveInfo[] drives;
+        try
+        {
+            drives = DriveInfo.GetDrives();
+        }
+        catch
+        {
+            return Array.Empty<DriveInfo>();
+        }
+
+        return drives.Where(drive =>
+        {
+            try
+            {
+                return drive.IsReady;
+            }
+            catch
+            {
+                return false;
+            }
+        });
+    }
+
+    private static string BuildDriveLabel(DriveInfo drive)
+    {
+        var root = drive.RootDirectory.FullName.TrimEnd(Path.DirectorySeparatorChar);
+
+        try
+        {
+            var label = string.IsNullOrWhiteSpace(drive.VolumeLabel)
+                ? (drive.DriveType == DriveType.Removable ? "Removable Disk" : "Local Disk")
+                : drive.VolumeLabel;
+            return $"{label} ({root})";
+        }
+        catch
+        {
+            return root;
+        }
     }
 
     private async void OnFileOperationCompleted(object? sender, OperationResult result)

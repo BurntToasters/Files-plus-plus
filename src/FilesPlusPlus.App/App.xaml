@@ -18,6 +18,7 @@
             <local:FilePathToMediaSourceConverter x:Key="FilePathToMediaSourceConverter" />
             <local:ZeroCountToVisibilityConverter x:Key="ZeroCountToVisibilityConverter" />
             <local:ViewModeToVisibilityConverter x:Key="ViewModeToVisibilityConverter" />
+            <local:SectionToFontWeightConverter x:Key="SectionToFontWeightConverter" />
 
             <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
                 <Setter Property="UseSystemFocusVisuals" Value="True" />
@@ -42,7 +43,7 @@
                 <Setter Property="FontSize" Value="12" />
                 <Setter Property="Padding" Value="12,5,12,6" />
                 <Setter Property="MinHeight" Value="28" />
-                <Setter Property="CornerRadius" Value="14" />
+                <Setter Property="CornerRadius" Value="6" />
                 <Setter Property="Background" Value="{ThemeResource ShellButtonBackgroundBrush}" />
                 <Setter Property="BorderBrush" Value="{ThemeResource ShellButtonBorderBrush}" />
                 <Setter Property="BorderThickness" Value="1" />
@@ -119,7 +120,7 @@
                 <Setter Property="FontSize" Value="12" />
                 <Setter Property="Padding" Value="12,5,12,6" />
                 <Setter Property="MinHeight" Value="28" />
-                <Setter Property="CornerRadius" Value="14" />
+                <Setter Property="CornerRadius" Value="6" />
                 <Setter Property="Background" Value="{ThemeResource ShellButtonBackgroundBrush}" />
                 <Setter Property="BorderBrush" Value="{ThemeResource ShellButtonBorderBrush}" />
                 <Setter Property="BorderThickness" Value="1" />
@@ -231,7 +232,7 @@
                 <Setter Property="BorderBrush" Value="{ThemeResource ShellAeroAccentGlowBorderBrush}" />
                 <Setter Property="Padding" Value="14,6,16,6" />
                 <Setter Property="MinHeight" Value="30" />
-                <Setter Property="CornerRadius" Value="15" />
+                <Setter Property="CornerRadius" Value="6" />
             </Style>
 
             <!-- Section: Menu flyout styles -->
@@ -239,7 +240,7 @@
                 <Setter Property="Background" Value="{ThemeResource ShellMenuFlyoutBackgroundBrush}" />
                 <Setter Property="BorderBrush" Value="{ThemeResource ShellMenuFlyoutBorderBrush}" />
                 <Setter Property="BorderThickness" Value="1" />
-                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="CornerRadius" Value="6" />
                 <Setter Property="Padding" Value="2,4" />
                 <Setter Property="Foreground" Value="{ThemeResource ShellMenuFlyoutForegroundBrush}" />
                 <Setter Property="FontFamily" Value="Segoe UI" />
@@ -401,13 +402,13 @@
                             <Grid x:Name="LayoutRoot">
                                 <Border
                                     x:Name="HoverBackground"
-                                    CornerRadius="7"
+                                    CornerRadius="5"
                                     Background="Transparent"
                                     BorderThickness="1"
                                     BorderBrush="Transparent" />
                                 <Border
                                     x:Name="SelectedBackground"
-                                    CornerRadius="7"
+                                    CornerRadius="5"
                                     Background="{ThemeResource ShellSelectionBackgroundBrush}"
                                     BorderBrush="{ThemeResource ShellSelectionBorderBrush}"
                                     BorderThickness="1"
@@ -502,13 +503,13 @@
                             <Grid x:Name="LayoutRoot">
                                 <Border
                                     x:Name="HoverBackground"
-                                    CornerRadius="7"
+                                    CornerRadius="5"
                                     Background="Transparent"
                                     BorderThickness="1"
                                     BorderBrush="Transparent" />
                                 <Border
                                     x:Name="SelectedBackground"
-                                    CornerRadius="7"
+                                    CornerRadius="5"
                                     Background="{ThemeResource ShellSelectionBackgroundBrush}"
                                     BorderBrush="{ThemeResource ShellSelectionBorderBrush}"
                                     BorderThickness="1"
