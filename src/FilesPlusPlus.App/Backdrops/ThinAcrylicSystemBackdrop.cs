@@ -21,9 +21,9 @@ public sealed class ThinAcrylicSystemBackdrop : SystemBackdrop
         {
             Kind = DesktopAcrylicKind.Thin,
             TintColor = Color.FromArgb(0xFF, 0x22, 0x7D, 0xDA),
-            TintOpacity = 0.10f,
-            LuminosityOpacity = 0.52f,
-            FallbackColor = Color.FromArgb(0xFF, 0x1A, 0x24, 0x32),
+            TintOpacity = 0.16f,
+            LuminosityOpacity = 0.58f,
+            FallbackColor = Color.FromArgb(0xFF, 0xD8, 0xE8, 0xF4),
         };
 
         _controller.AddSystemBackdropTarget(connectedTarget);

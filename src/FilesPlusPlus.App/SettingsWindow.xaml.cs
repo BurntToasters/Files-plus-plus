@@ -202,6 +202,7 @@ public sealed partial class SettingsWindow : Window
                 DefaultButton = ContentDialogButton.Primary,
                 XamlRoot = RootGrid.XamlRoot
             };
+            ApplyShellDialogChrome(dialog);
 
             var result = await dialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
@@ -224,9 +225,53 @@ public sealed partial class SettingsWindow : Window
 
     private void ApplyAccentSwatch(string? hex)
     {
-        if (TryParseColor(hex, out var color))
+        if (!TryParseColor(hex, out var color))
         {
-            AccentSwatch.Background = new SolidColorBrush(color);
+            return;
+        }
+
+        AccentSwatch.Background = new SolidColorBrush(color);
+        ApplyAccentControlBrushes(color);
+    }
+
+    // Why: Settings ToggleSwitch / RadioButton / NavView selection stay on the live accent, not a hardcoded cyan.
+    private void ApplyAccentControlBrushes(Color color)
+    {
+        var opaque = Color.FromArgb(0xFF, color.R, color.G, color.B);
+        var mid = Color.FromArgb(0xFF,
+            (byte)Math.Clamp(color.R + 40, 0, 255),
+            (byte)Math.Clamp(color.G + 30, 0, 255),
+            (byte)Math.Clamp(color.B + 20, 0, 255));
+        var dark = Color.FromArgb(0xFF,
+            (byte)Math.Clamp(color.R - 30, 0, 255),
+            (byte)Math.Clamp(color.G - 25, 0, 255),
+            (byte)Math.Clamp(color.B - 20, 0, 255));
+
+        void SetBrush(ResourceDictionary resources, string key, Color value)
+            => resources[key] = new SolidColorBrush(value);
+
+        if (SettingsContentHost?.Resources is { } contentResources)
+        {
+            SetBrush(contentResources, "ToggleSwitchFillOn", opaque);
+            SetBrush(contentResources, "ToggleSwitchFillOnPointerOver", mid);
+            SetBrush(contentResources, "ToggleSwitchFillOnPressed", dark);
+            SetBrush(contentResources, "ToggleSwitchStrokeOn", opaque);
+            SetBrush(contentResources, "ToggleSwitchStrokeOnPointerOver", mid);
+            SetBrush(contentResources, "ToggleSwitchStrokeOnPressed", dark);
+            SetBrush(contentResources, "RadioButtonOuterEllipseCheckedStroke", opaque);
+            SetBrush(contentResources, "RadioButtonOuterEllipseCheckedFill", Color.FromArgb(0x28, opaque.R, opaque.G, opaque.B));
+            SetBrush(contentResources, "RadioButtonCheckGlyphFill", opaque);
+            SetBrush(contentResources, "RadioButtonOuterEllipseCheckedStrokePointerOver", mid);
+            SetBrush(contentResources, "RadioButtonCheckGlyphFillPointerOver", mid);
+        }
+
+        if (SettingsNav?.Resources is { } navResources)
+        {
+            SetBrush(navResources, "NavigationViewItemBackgroundPointerOver", Color.FromArgb(0x34, opaque.R, opaque.G, opaque.B));
+            SetBrush(navResources, "NavigationViewItemBackgroundPressed", Color.FromArgb(0x48, opaque.R, opaque.G, opaque.B));
+            SetBrush(navResources, "NavigationViewItemBackgroundSelected", Color.FromArgb(0x58, opaque.R, opaque.G, opaque.B));
+            SetBrush(navResources, "NavigationViewItemBackgroundSelectedPointerOver", Color.FromArgb(0x70, mid.R, mid.G, mid.B));
+            SetBrush(navResources, "NavigationViewItemBackgroundSelectedPressed", Color.FromArgb(0x80, dark.R, dark.G, dark.B));
         }
     }
 
@@ -291,6 +336,7 @@ public sealed partial class SettingsWindow : Window
             Content = picker,
             XamlRoot = RootGrid.XamlRoot
         };
+        ApplyShellDialogChrome(dialog);
 
         var result = await dialog.ShowAsync();
         if (result == ContentDialogResult.Primary)
@@ -323,5 +369,32 @@ public sealed partial class SettingsWindow : Window
 
         var folder = await picker.PickSingleFolderAsync();
         return folder?.Path;
+    }
+
+    // Why: ContentDialog defaults to Fluent acrylic; re-skin to match shell glass surfaces.
+    private void ApplyShellDialogChrome(ContentDialog dialog)
+    {
+        dialog.RequestedTheme = RootGrid.ActualTheme;
+        dialog.CornerRadius = new CornerRadius(8);
+        dialog.BorderThickness = new Thickness(1);
+        dialog.BorderBrush = TryGetThemeBrush("ShellSurfaceBorderBrush");
+        dialog.Background = TryGetThemeBrush("ShellSurfaceBackgroundBrush");
+        dialog.Foreground = TryGetThemeBrush("ShellButtonForegroundBrush");
+
+        dialog.Resources["ContentDialogBackground"] = TryGetThemeBrush("ShellSurfaceBackgroundBrush");
+        dialog.Resources["ContentDialogBorderBrush"] = TryGetThemeBrush("ShellSurfaceBorderBrush");
+        dialog.Resources["ContentDialogForeground"] = TryGetThemeBrush("ShellButtonForegroundBrush");
+        dialog.Resources["ContentDialogTopOverlay"] = TryGetThemeBrush("ShellPanelTopSheenBrush");
+        dialog.Resources["ContentDialogSmokeFillColor"] = Color.FromArgb(0x66, 0x00, 0x00, 0x00);
+    }
+
+    private static Brush TryGetThemeBrush(string key)
+    {
+        if (Application.Current.Resources.TryGetValue(key, out var value) && value is Brush brush)
+        {
+            return brush;
+        }
+
+        return new SolidColorBrush(Microsoft.UI.Colors.Transparent);
     }
 }

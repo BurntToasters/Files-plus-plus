@@ -2,26 +2,16 @@ using System.Runtime.InteropServices;
 
 namespace FilesPlusPlus.App.Services;
 
-/// <summary>
-/// Raw 32bpp BGRA pixel payload for a shell thumbnail or icon, decoupled from any UI type
-/// so it can be produced entirely off the UI thread.
-/// </summary>
+// Why: Raw BGRA keeps thumbnail work off the UI thread until WriteableBitmap creation.
 public sealed record ShellThumbnailPixels(int Width, int Height, byte[] Bgra);
 
 public enum ShellThumbnailKind
 {
-    /// <summary>Prefer a real thumbnail (image/video/doc preview), fall back to the file-type icon.</summary>
     ThumbnailOrIcon,
-
-    /// <summary>Force the file-type/association icon even when a thumbnail exists.</summary>
     IconOnly
 }
 
-/// <summary>
-/// Fetches real Windows shell icons and thumbnails using <c>IShellItemImageFactory</c> (the same
-/// surface Explorer uses). Work runs on the thread pool; results are returned as raw BGRA pixels
-/// so callers can build a <c>WriteableBitmap</c> on the UI thread.
-/// </summary>
+// Why: Uses IShellItemImageFactory (Explorer's surface) on the thread pool.
 public sealed class ShellThumbnailService
 {
     public static ShellThumbnailService Instance { get; } = new();
@@ -67,8 +57,7 @@ public sealed class ShellThumbnailService
 
     private static string BuildCacheKey(string path, int pixelSize, ShellThumbnailKind kind)
     {
-        // Why: Icons can change when a file's modified time changes (e.g. regenerated thumbnails),
-        // so the last-write timestamp is folded into the key when cheaply available.
+        // Why: Fold last-write ticks into the key so regenerated thumbnails invalidate cache.
         long stamp = 0;
         try
         {
@@ -240,8 +229,7 @@ public sealed class ShellThumbnailService
 
     private static void EnsureVisibleAlpha(byte[] bgra)
     {
-        // Why: A handful of icon providers return a 32bpp bitmap with a zeroed alpha channel,
-        // which would render fully transparent. If every pixel is transparent, force it opaque.
+        // Why: Some icon providers return zeroed alpha; force opaque so the glyph is visible.
         for (var i = 3; i < bgra.Length; i += 4)
         {
             if (bgra[i] != 0)

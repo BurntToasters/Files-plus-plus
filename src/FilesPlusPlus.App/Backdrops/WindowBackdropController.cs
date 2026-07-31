@@ -3,6 +3,7 @@ using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using WinRT;
+using Windows.UI;
 
 namespace FilesPlusPlus.App.Backdrops;
 
@@ -13,6 +14,7 @@ public sealed class WindowBackdropController : IDisposable
     private SystemBackdropConfiguration? _configuration;
     private DesktopAcrylicController? _acrylicController;
     private MicaController? _micaController;
+    private Color? _accentTint;
     private bool _disposed;
 
     public WindowBackdropController(Window window, FrameworkElement themeSource)
@@ -32,15 +34,8 @@ public sealed class WindowBackdropController : IDisposable
         {
             EnsureConfiguration();
 
-            _acrylicController = new DesktopAcrylicController
-            {
-                Kind = DesktopAcrylicKind.Thin,
-                TintColor = Windows.UI.Color.FromArgb(0xFF, 0x22, 0x7D, 0xDA),
-                TintOpacity = 0.10f,
-                LuminosityOpacity = 0.52f,
-                FallbackColor = Windows.UI.Color.FromArgb(0xFF, 0x1A, 0x24, 0x32),
-            };
-
+            _acrylicController = new DesktopAcrylicController();
+            ApplyAcrylicTuning(_themeSource.ActualTheme);
             _acrylicController.AddSystemBackdropTarget(_window.As<ICompositionSupportsSystemBackdrop>());
             _acrylicController.SetSystemBackdropConfiguration(_configuration!);
             return true;
@@ -61,6 +56,39 @@ public sealed class WindowBackdropController : IDisposable
         }
 
         return false;
+    }
+
+    public void ApplyAccentTint(Color? accent, ElementTheme theme)
+    {
+        _accentTint = accent;
+        if (_acrylicController is not null)
+        {
+            ApplyAcrylicTuning(theme);
+        }
+    }
+
+    private void ApplyAcrylicTuning(ElementTheme theme)
+    {
+        if (_acrylicController is null)
+        {
+            return;
+        }
+
+        var isDark = theme == ElementTheme.Dark ||
+            (theme == ElementTheme.Default && Application.Current.RequestedTheme == ApplicationTheme.Dark);
+
+        var tint = _accentTint ?? (isDark
+            ? Color.FromArgb(0xFF, 0x6A, 0x9A, 0xB4)
+            : Color.FromArgb(0xFF, 0x22, 0x7D, 0xDA));
+
+        _acrylicController.Kind = DesktopAcrylicKind.Thin;
+        _acrylicController.TintColor = tint;
+        // Why: Lower tint + higher luminosity reads as frosted Aero glass instead of teal plastic.
+        _acrylicController.TintOpacity = isDark ? 0.08f : 0.14f;
+        _acrylicController.LuminosityOpacity = isDark ? 0.36f : 0.62f;
+        _acrylicController.FallbackColor = isDark
+            ? Color.FromArgb(0xFF, 0x0E, 0x14, 0x1A)
+            : Color.FromArgb(0xFF, 0xD8, 0xE8, 0xF4);
     }
 
     private void EnsureConfiguration()
@@ -94,6 +122,7 @@ public sealed class WindowBackdropController : IDisposable
     private void ThemeSource_ActualThemeChanged(FrameworkElement sender, object args)
     {
         SetThemeFromXaml();
+        ApplyAcrylicTuning(sender.ActualTheme);
     }
 
     private void SetThemeFromXaml()

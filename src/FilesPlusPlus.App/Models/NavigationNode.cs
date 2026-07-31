@@ -3,11 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace FilesPlusPlus.App.Models;
 
-/// <summary>
-/// A node in the navigation pane tree. Nodes are either non-navigable section headers
-/// (Quick access, Libraries, This PC) or folder/drive entries that lazily load their
-/// child folders when expanded.
-/// </summary>
+// Why: Section headers are non-navigable; folder nodes lazy-load children on expand.
 public sealed partial class NavigationNode : ObservableObject
 {
     public NavigationNode(
@@ -37,7 +33,6 @@ public sealed partial class NavigationNode : ObservableObject
 
     public ObservableCollection<NavigationNode> Children { get; } = new();
 
-    /// <summary>True once the real child folders have been enumerated.</summary>
     public bool AreChildrenLoaded { get; set; }
 
     [ObservableProperty]

@@ -33,7 +33,7 @@ public sealed record AppearanceSettings(
     AppDensity Density)
 {
     public static AppearanceSettings Default { get; } =
-        new(AppThemeMode.System, "#FF20B6D6", AppDensity.Default);
+        new(AppThemeMode.System, "#FF1F8FE6", AppDensity.Default);
 }
 
 public sealed record ViewSettings(

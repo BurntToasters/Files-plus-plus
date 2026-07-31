@@ -20,9 +20,9 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition x:Name="TitleBarRightInsetColumn" Width="0" />
             </Grid.ColumnDefinitions>
-            <Border x:Name="TitleBarDragRegion" Grid.Column="1" Margin="12,6,12,0" CornerRadius="10" Background="{ThemeResource ShellTitleBarBackgroundBrush}" BorderBrush="{ThemeResource ShellTitleBarBorderBrush}" BorderThickness="1">
+            <Border x:Name="TitleBarDragRegion" Grid.Column="1" Margin="8,4,8,0" CornerRadius="5" Background="{ThemeResource ShellTitleBarBackgroundBrush}" BorderBrush="{ThemeResource ShellTitleBarBorderBrush}" BorderThickness="1">
                 <Grid>
-                    <Rectangle VerticalAlignment="Top" Height="2" Margin="6,1,6,0" RadiusX="1" RadiusY="1" Fill="{ThemeResource ShellPanelHighlightStripBrush}" IsHitTestVisible="False" />
+                    <Border VerticalAlignment="Top" Height="12" Margin="1,1,1,0" CornerRadius="4,4,0,0" Background="{ThemeResource ShellPanelTopSheenBrush}" IsHitTestVisible="False" />
                     <Grid Padding="14,0,14,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -36,6 +36,8 @@
                 </Grid>
             </Border>
         </Grid>
+        <Rectangle Grid.Row="0" Grid.RowSpan="2" Fill="{ThemeResource ShellBackdropOrbBrush}" IsHitTestVisible="False" />
+        <Rectangle Grid.Row="0" Grid.RowSpan="2" Fill="{ThemeResource ShellBackdropTopGlowBrush}" IsHitTestVisible="False" />
         <Rectangle Grid.Row="0" Grid.RowSpan="2" Fill="{ThemeResource ShellTopChromeScrimBrush}" IsHitTestVisible="False" />
 
         
@@ -55,11 +57,11 @@
                 <SolidColorBrush x:Key="NavigationViewTopPaneBackground" Color="Transparent" />
                 <SolidColorBrush x:Key="NavigationViewContentBackground" Color="Transparent" />
                 <SolidColorBrush x:Key="NavigationViewItemBackground" Color="Transparent" />
-                <SolidColorBrush x:Key="NavigationViewItemBackgroundPointerOver" Color="#22FFFFFF" />
-                <SolidColorBrush x:Key="NavigationViewItemBackgroundPressed" Color="#33FFFFFF" />
-                <SolidColorBrush x:Key="NavigationViewItemBackgroundSelected" Color="#33FFFFFF" />
-                <SolidColorBrush x:Key="NavigationViewItemBackgroundSelectedPointerOver" Color="#44FFFFFF" />
-                <SolidColorBrush x:Key="NavigationViewItemBackgroundSelectedPressed" Color="#55FFFFFF" />
+                <SolidColorBrush x:Key="NavigationViewItemBackgroundPointerOver" Color="#3434C9E6" />
+                <SolidColorBrush x:Key="NavigationViewItemBackgroundPressed" Color="#4834C9E6" />
+                <SolidColorBrush x:Key="NavigationViewItemBackgroundSelected" Color="#5834C9E6" />
+                <SolidColorBrush x:Key="NavigationViewItemBackgroundSelectedPointerOver" Color="#7034C9E6" />
+                <SolidColorBrush x:Key="NavigationViewItemBackgroundSelectedPressed" Color="#8034C9E6" />
             </NavigationView.Resources>
             <NavigationView.MenuItems>
                 <NavigationViewItem Tag="appearance" Content="Appearance" Icon="Font" />
@@ -70,10 +72,48 @@
             </NavigationView.MenuItems>
 
             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                <Grid Padding="16,16,16,16">
-                    <Border CornerRadius="10" Background="{ThemeResource ShellSurfaceBackgroundBrush}" BorderBrush="{ThemeResource ShellSurfaceBorderBrush}" BorderThickness="1">
+                <Grid x:Name="SettingsContentHost" Padding="16,16,16,16">
+                    <Grid.Resources>
+                        <Style TargetType="TextBox" BasedOn="{StaticResource DefaultTextBoxStyle}">
+                            <Setter Property="CornerRadius" Value="4" />
+                            <Setter Property="Background" Value="{ThemeResource ShellInputBackgroundBrush}" />
+                            <Setter Property="BorderBrush" Value="{ThemeResource ShellInputBorderBrush}" />
+                            <Setter Property="Foreground" Value="{ThemeResource ShellButtonForegroundBrush}" />
+                            <Setter Property="FontSize" Value="12" />
+                        </Style>
+                        <Style TargetType="ComboBox" BasedOn="{StaticResource DefaultComboBoxStyle}">
+                            <Setter Property="CornerRadius" Value="4" />
+                            <Setter Property="Background" Value="{ThemeResource ShellInputBackgroundBrush}" />
+                            <Setter Property="BorderBrush" Value="{ThemeResource ShellInputBorderBrush}" />
+                            <Setter Property="Foreground" Value="{ThemeResource ShellButtonForegroundBrush}" />
+                            <Setter Property="FontSize" Value="12" />
+                        </Style>
+                        <Style TargetType="RadioButton" BasedOn="{StaticResource DefaultRadioButtonStyle}">
+                            <Setter Property="Foreground" Value="{ThemeResource ShellButtonForegroundBrush}" />
+                            <Setter Property="FontSize" Value="12" />
+                        </Style>
+                        <Style TargetType="ToggleSwitch" BasedOn="{StaticResource DefaultToggleSwitchStyle}">
+                            <Setter Property="Foreground" Value="{ThemeResource ShellButtonForegroundBrush}" />
+                            <Setter Property="FontSize" Value="12" />
+                        </Style>
+                        <SolidColorBrush x:Key="ToggleSwitchFillOn" Color="#FF1F8FE6" />
+                        <SolidColorBrush x:Key="ToggleSwitchFillOnPointerOver" Color="#FF3A9EEC" />
+                        <SolidColorBrush x:Key="ToggleSwitchFillOnPressed" Color="#FF1578C8" />
+                        <SolidColorBrush x:Key="ToggleSwitchStrokeOn" Color="#FF1F8FE6" />
+                        <SolidColorBrush x:Key="ToggleSwitchStrokeOnPointerOver" Color="#FF3A9EEC" />
+                        <SolidColorBrush x:Key="ToggleSwitchStrokeOnPressed" Color="#FF1578C8" />
+                        <SolidColorBrush x:Key="ToggleSwitchKnobFillOn" Color="#FFFFFFFF" />
+                        <SolidColorBrush x:Key="ToggleSwitchKnobFillOnPointerOver" Color="#FFFFFFFF" />
+                        <SolidColorBrush x:Key="ToggleSwitchKnobFillOnPressed" Color="#FFF0F7FC" />
+                        <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStroke" Color="#FF1F8FE6" />
+                        <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFill" Color="#281F8FE6" />
+                        <SolidColorBrush x:Key="RadioButtonCheckGlyphFill" Color="#FF1F8FE6" />
+                        <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStrokePointerOver" Color="#FF3A9EEC" />
+                        <SolidColorBrush x:Key="RadioButtonCheckGlyphFillPointerOver" Color="#FF3A9EEC" />
+                    </Grid.Resources>
+                    <Border CornerRadius="5" Background="{ThemeResource ShellSurfaceBackgroundBrush}" BorderBrush="{ThemeResource ShellSurfaceBorderBrush}" BorderThickness="1">
                         <Grid Padding="24,20,24,20">
-                            <Rectangle VerticalAlignment="Top" Height="2" Margin="6,1,6,0" RadiusX="1" RadiusY="1" Fill="{ThemeResource ShellPanelHighlightStripBrush}" IsHitTestVisible="False" />
+                            <Border VerticalAlignment="Top" Height="16" Margin="1,1,1,0" CornerRadius="4,4,0,0" Background="{ThemeResource ShellPanelTopSheenBrush}" IsHitTestVisible="False" />
 
                             
                             <!-- Section: Appearance -->
@@ -81,7 +121,7 @@
                                 <TextBlock Text="Appearance" FontSize="20" FontWeight="SemiBold" />
 
                                 <StackPanel Spacing="8">
-                                    <TextBlock Text="Theme" FontSize="13" FontWeight="SemiBold" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                    <TextBlock Text="Theme" FontSize="13" FontWeight="SemiBold" Foreground="{ThemeResource ShellSecondaryForegroundBrush}" />
                                     <StackPanel Orientation="Horizontal" Spacing="20">
                                         <RadioButton Content="Use system" IsChecked="{x:Bind ViewModel.IsThemeSystem, Mode=TwoWay}" GroupName="ThemeMode" />
                                         <RadioButton Content="Light" IsChecked="{x:Bind ViewModel.IsThemeLight, Mode=TwoWay}" GroupName="ThemeMode" />
@@ -90,16 +130,16 @@
                                 </StackPanel>
 
                                 <StackPanel Spacing="8">
-                                    <TextBlock Text="Accent color" FontSize="13" FontWeight="SemiBold" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                    <TextBlock Text="Accent color" FontSize="13" FontWeight="SemiBold" Foreground="{ThemeResource ShellSecondaryForegroundBrush}" />
                                     <StackPanel Orientation="Horizontal" Spacing="12">
-                                        <Border x:Name="AccentSwatch" Width="40" Height="32" CornerRadius="6" BorderBrush="{ThemeResource ShellSurfaceBorderBrush}" BorderThickness="1" />
+                                        <Border x:Name="AccentSwatch" Width="40" Height="32" CornerRadius="4" BorderBrush="{ThemeResource ShellSurfaceBorderBrush}" BorderThickness="1" />
                                         <Button Style="{StaticResource ShellGlassButtonStyle}" Content="Change..." Click="AccentPicker_Click" />
                                         <TextBox Text="{x:Bind ViewModel.AccentHex, Mode=TwoWay}" Width="120" PlaceholderText="#FF1F8FE6" />
                                     </StackPanel>
                                 </StackPanel>
 
                                 <StackPanel Spacing="8">
-                                    <TextBlock Text="Density" FontSize="13" FontWeight="SemiBold" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                    <TextBlock Text="Density" FontSize="13" FontWeight="SemiBold" Foreground="{ThemeResource ShellSecondaryForegroundBrush}" />
                                     <ComboBox ItemsSource="{x:Bind ViewModel.DensityOptions}" SelectedItem="{x:Bind ViewModel.Density, Mode=TwoWay}" MinWidth="180" />
                                 </StackPanel>
                             </StackPanel>
@@ -110,12 +150,12 @@
                                 <TextBlock Text="View" FontSize="20" FontWeight="SemiBold" />
 
                                 <StackPanel Spacing="8">
-                                    <TextBlock Text="Default view mode" FontSize="13" FontWeight="SemiBold" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                    <TextBlock Text="Default view mode" FontSize="13" FontWeight="SemiBold" Foreground="{ThemeResource ShellSecondaryForegroundBrush}" />
                                     <ComboBox ItemsSource="{x:Bind ViewModel.ViewModeOptions}" SelectedItem="{x:Bind ViewModel.DefaultViewMode, Mode=TwoWay}" MinWidth="180" />
                                 </StackPanel>
 
                                 <StackPanel Spacing="8">
-                                    <TextBlock Text="Default sort column" FontSize="13" FontWeight="SemiBold" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                    <TextBlock Text="Default sort column" FontSize="13" FontWeight="SemiBold" Foreground="{ThemeResource ShellSecondaryForegroundBrush}" />
                                     <ComboBox ItemsSource="{x:Bind ViewModel.SortColumnOptions}" SelectedItem="{x:Bind ViewModel.DefaultSortColumn, Mode=TwoWay}" MinWidth="180" />
                                     <ToggleSwitch Header="Sort descending by default" IsOn="{x:Bind ViewModel.DefaultSortDescending, Mode=TwoWay}" />
                                 </StackPanel>
@@ -133,7 +173,7 @@
                                 <TextBlock Text="Navigation" FontSize="20" FontWeight="SemiBold" />
 
                                 <StackPanel Spacing="8">
-                                    <TextBlock Text="When Files++ launches" FontSize="13" FontWeight="SemiBold" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                    <TextBlock Text="When Files++ launches" FontSize="13" FontWeight="SemiBold" Foreground="{ThemeResource ShellSecondaryForegroundBrush}" />
                                     <RadioButton Content="Restore previous tabs" IsChecked="{x:Bind ViewModel.IsStartupRestore, Mode=TwoWay}" GroupName="StartupBehavior" />
                                     <RadioButton Content="Open Home folder" IsChecked="{x:Bind ViewModel.IsStartupHome, Mode=TwoWay}" GroupName="StartupBehavior" />
                                     <RadioButton Content="Open a specific folder" IsChecked="{x:Bind ViewModel.IsStartupSpecific, Mode=TwoWay}" GroupName="StartupBehavior" />
@@ -144,7 +184,7 @@
                                 </StackPanel>
 
                                 <StackPanel Spacing="8">
-                                    <TextBlock Text="Open items with" FontSize="13" FontWeight="SemiBold" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                    <TextBlock Text="Open items with" FontSize="13" FontWeight="SemiBold" Foreground="{ThemeResource ShellSecondaryForegroundBrush}" />
                                     <RadioButton Content="Double click" IsChecked="{x:Bind ViewModel.IsOpenDoubleClick, Mode=TwoWay}" GroupName="OpenItem" />
                                     <RadioButton Content="Single click" IsChecked="{x:Bind ViewModel.IsOpenSingleClick, Mode=TwoWay}" GroupName="OpenItem" />
                                 </StackPanel>
@@ -168,7 +208,7 @@
                                     <Border
                                         Grid.Column="0"
                                         Height="320"
-                                        CornerRadius="10"
+                                        CornerRadius="5"
                                         Background="{ThemeResource ShellInputBackgroundBrush}"
                                         BorderBrush="{ThemeResource ShellSurfaceBorderBrush}"
                                         BorderThickness="1">
@@ -190,7 +230,7 @@
                                                             </Grid.ColumnDefinitions>
                                                             <FontIcon Grid.Column="0" Glyph="{Binding Glyph}" FontSize="14" />
                                                             <TextBlock Grid.Column="1" Text="{Binding Label}" VerticalAlignment="Center" FontSize="13" />
-                                                            <TextBlock Grid.Column="2" Text="{Binding Path}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" FontSize="11" VerticalAlignment="Center" />
+                                                            <TextBlock Grid.Column="2" Text="{Binding Path}" Foreground="{ThemeResource ShellSecondaryForegroundBrush}" FontSize="11" VerticalAlignment="Center" />
                                                         </Grid>
                                                     </DataTemplate>
                                                 </ListView.ItemTemplate>
@@ -212,9 +252,9 @@
                             <!-- Section: Shortcuts -->
                             <StackPanel x:Name="ShortcutsPanel" Spacing="20" Visibility="Collapsed">
                                 <TextBlock Text="Shortcuts" FontSize="20" FontWeight="SemiBold" />
-                                <TextBlock Text="Keyboard shortcuts are read-only in this release." Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                <TextBlock Text="Keyboard shortcuts are read-only in this release." Foreground="{ThemeResource ShellSecondaryForegroundBrush}" />
                                 <Border
-                                    CornerRadius="10"
+                                    CornerRadius="5"
                                     Background="{ThemeResource ShellInputBackgroundBrush}"
                                     BorderBrush="{ThemeResource ShellSurfaceBorderBrush}"
                                     BorderThickness="1">
@@ -233,8 +273,8 @@
                                                             <ColumnDefinition Width="*" />
                                                             <ColumnDefinition Width="200" />
                                                         </Grid.ColumnDefinitions>
-                                                        <TextBlock Grid.Column="0" Text="ACTION" FontSize="10" FontWeight="SemiBold" CharacterSpacing="120" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                                                        <TextBlock Grid.Column="1" Text="KEYS" FontSize="10" FontWeight="SemiBold" CharacterSpacing="120" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                                        <TextBlock Grid.Column="0" Text="ACTION" FontSize="10" FontWeight="SemiBold" CharacterSpacing="120" Foreground="{ThemeResource ShellSecondaryForegroundBrush}" />
+                                                        <TextBlock Grid.Column="1" Text="KEYS" FontSize="10" FontWeight="SemiBold" CharacterSpacing="120" Foreground="{ThemeResource ShellSecondaryForegroundBrush}" />
                                                     </Grid>
                                                 </DataTemplate>
                                             </ListView.HeaderTemplate>
@@ -246,7 +286,7 @@
                                                             <ColumnDefinition Width="200" />
                                                         </Grid.ColumnDefinitions>
                                                         <TextBlock Grid.Column="0" Text="{Binding Action}" FontSize="13" />
-                                                        <TextBlock Grid.Column="1" Text="{Binding Keys}" FontFamily="Consolas" FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                                        <TextBlock Grid.Column="1" Text="{Binding Keys}" FontFamily="Consolas" FontSize="12" Foreground="{ThemeResource ShellSecondaryForegroundBrush}" />
                                                     </Grid>
                                                 </DataTemplate>
                                             </ListView.ItemTemplate>
@@ -260,26 +300,23 @@
             </ScrollViewer>
         </NavigationView>
 
-        <Border Grid.Row="2" Margin="16,0,16,12" CornerRadius="10" BorderThickness="1" BorderBrush="{ThemeResource ShellSurfaceBorderBrush}" Background="{ThemeResource ShellSurfaceBackgroundBrush}">
-            <Grid>
-                <Rectangle VerticalAlignment="Top" Height="2" Margin="6,1,6,0" RadiusX="1" RadiusY="1" Fill="{ThemeResource ShellPanelHighlightStripBrush}" IsHitTestVisible="False" />
-                <Grid Padding="16,10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="{x:Bind ViewModel.StatusMessage, Mode=OneWay}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" VerticalAlignment="Center" />
-                    <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10">
-                        <Button
-                            Style="{StaticResource ShellGlassButtonStyle}"
-                            Content="Reset to defaults"
-                            Command="{x:Bind ViewModel.ResetCommand}" />
-                        <Button
-                            Style="{StaticResource ShellGlassPrimaryButtonStyle}"
-                            Content="Save"
-                            Command="{x:Bind ViewModel.SaveCommand}" />
-                    </StackPanel>
-                </Grid>
+        <Border Grid.Row="2" Margin="16,0,16,10" CornerRadius="5" BorderThickness="1" BorderBrush="{ThemeResource ShellSubtleBorderBrush}" Background="{ThemeResource ShellCommandStripBackgroundBrush}">
+            <Grid Padding="14,8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{x:Bind ViewModel.StatusMessage, Mode=OneWay}" Foreground="{ThemeResource ShellSecondaryForegroundBrush}" VerticalAlignment="Center" FontSize="12" />
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                    <Button
+                        Style="{StaticResource ShellGlassButtonStyle}"
+                        Content="Reset to defaults"
+                        Command="{x:Bind ViewModel.ResetCommand}" />
+                    <Button
+                        Style="{StaticResource ShellGlassPrimaryButtonStyle}"
+                        Content="Save"
+                        Command="{x:Bind ViewModel.SaveCommand}" />
+                </StackPanel>
             </Grid>
         </Border>
     </Grid>

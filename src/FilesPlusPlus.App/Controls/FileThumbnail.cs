@@ -7,11 +7,7 @@ using Microsoft.UI.Xaml.Media.Imaging;
 
 namespace FilesPlusPlus.App.Controls;
 
-/// <summary>
-/// Displays the real Windows shell icon or live thumbnail for a file system item, falling back to a
-/// tinted glyph while the image loads (or when no shell image is available). Designed to live inside
-/// virtualized list/grid item templates, so loads are cancelled and restarted on container recycling.
-/// </summary>
+// Why: Lives in virtualized item templates; loads cancel/restart on container recycling.
 public sealed partial class FileThumbnail : Grid
 {
     private readonly Image _image;

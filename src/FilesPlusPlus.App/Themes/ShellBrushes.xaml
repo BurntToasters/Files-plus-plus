@@ -5,114 +5,169 @@
     <!-- Section: Theme dictionaries -->
     <ResourceDictionary.ThemeDictionaries>
 
-        <!-- Section: Default (light frosted glass) -->
+        <!-- Section: Default (pearlescent Aero glass) -->
         <ResourceDictionary x:Key="Default">
 
-            <SolidColorBrush x:Key="FilesPlusPlusAccentBrush" Color="#FF1499B8" />
-            <SolidColorBrush x:Key="ShellAccentBrush" Color="#FF1499B8" />
+            <SolidColorBrush x:Key="FilesPlusPlusAccentBrush" Color="#FF1F8FE6" />
+            <SolidColorBrush x:Key="ShellAccentBrush" Color="#FF1F8FE6" />
             <SolidColorBrush x:Key="ShellWindowBackgroundBrush" Color="Transparent" />
 
-            <SolidColorBrush x:Key="ShellBackdropOrbBrush" Color="Transparent" />
-            <SolidColorBrush x:Key="ShellBackdropTopGlowBrush" Color="Transparent" />
-            <LinearGradientBrush x:Key="ShellTopChromeScrimBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#2EFFFFFF" Offset="0" />
-                <GradientStop Color="#0CFFFFFF" Offset="0.55" />
+            <RadialGradientBrush x:Key="ShellBackdropOrbBrush" Center="0.5,0.0" RadiusX="0.85" RadiusY="0.55">
+                <GradientStop Color="#5522A0E8" Offset="0" />
+                <GradientStop Color="#1822A0E8" Offset="0.55" />
                 <GradientStop Color="#00000000" Offset="1" />
+            </RadialGradientBrush>
+            <LinearGradientBrush x:Key="ShellBackdropTopGlowBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#6638B4F0" Offset="0" />
+                <GradientStop Color="#2838B4F0" Offset="0.35" />
+                <GradientStop Color="#00000000" Offset="1" />
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="ShellTopChromeScrimBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#78FFFFFF" Offset="0" />
+                <GradientStop Color="#38FFFFFF" Offset="0.45" />
+                <GradientStop Color="#08FFFFFF" Offset="1" />
             </LinearGradientBrush>
 
             <LinearGradientBrush x:Key="ShellTitleBarBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#5AFFFFFF" Offset="0" />
-                <GradientStop Color="#34FFFFFF" Offset="1" />
-            </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellTitleBarBorderBrush" Color="#80FFFFFF" />
-            <SolidColorBrush x:Key="ShellTitleBarForegroundBrush" Color="#FF103048" />
-            <SolidColorBrush x:Key="ShellTitleBarSecondaryForegroundBrush" Color="#A0335169" />
-            <SolidColorBrush x:Key="ShellTitleBarButtonHoverBackgroundBrush" Color="#3F1499B8" />
-            <SolidColorBrush x:Key="ShellTitleBarButtonPressedBackgroundBrush" Color="#5C0F7B96" />
-
-            <SolidColorBrush x:Key="ShellTabStripBackgroundBrush" Color="#34FFFFFF" />
-            <SolidColorBrush x:Key="ShellTabStripBorderBrush" Color="#6EBFE0EC" />
-            <SolidColorBrush x:Key="ShellTabBackgroundBrush" Color="#2CFFFFFF" />
-            <SolidColorBrush x:Key="ShellTabBorderBrush" Color="#66FFFFFF" />
-            <SolidColorBrush x:Key="ShellTabForegroundBrush" Color="#FF113048" />
-            <SolidColorBrush x:Key="ShellTabCloseForegroundBrush" Color="#B0405D78" />
-            <LinearGradientBrush x:Key="ShellTabSelectedBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#86FFFFFF" Offset="0" />
+                <GradientStop Color="#C8FFFFFF" Offset="0" />
+                <GradientStop Color="#8AFFFFFF" Offset="0.45" />
                 <GradientStop Color="#5CFFFFFF" Offset="1" />
             </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellTabSelectedBorderBrush" Color="#FF1499B8" />
-            <SolidColorBrush x:Key="ShellTabIndicatorBrush" Color="#FF1499B8" />
+            <SolidColorBrush x:Key="ShellTitleBarBorderBrush" Color="#B0FFFFFF" />
+            <SolidColorBrush x:Key="ShellTitleBarForegroundBrush" Color="#FF0C2A48" />
+            <SolidColorBrush x:Key="ShellTitleBarSecondaryForegroundBrush" Color="#CC2A4A64" />
+            <SolidColorBrush x:Key="ShellSecondaryForegroundBrush" Color="#E02A4A64" />
+            <SolidColorBrush x:Key="ShellTitleBarButtonHoverBackgroundBrush" Color="#5522A0E8" />
+            <SolidColorBrush x:Key="ShellTitleBarButtonPressedBackgroundBrush" Color="#701F7CC0" />
+            <SolidColorBrush x:Key="ShellTitleBarButtonInactiveForegroundBrush" Color="#A02A4A64" />
+
+            <LinearGradientBrush x:Key="ShellTabStripBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#6AFFFFFF" Offset="0" />
+                <GradientStop Color="#38FFFFFF" Offset="1" />
+            </LinearGradientBrush>
+            <SolidColorBrush x:Key="ShellTabStripBorderBrush" Color="#90A8D8F0" />
+            <SolidColorBrush x:Key="ShellTabBackgroundBrush" Color="#3AFFFFFF" />
+            <SolidColorBrush x:Key="ShellTabBorderBrush" Color="#88FFFFFF" />
+            <SolidColorBrush x:Key="ShellTabForegroundBrush" Color="#FF0E2E4A" />
+            <SolidColorBrush x:Key="ShellTabCloseForegroundBrush" Color="#B038566E" />
+            <LinearGradientBrush x:Key="ShellTabSelectedBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#EEFFFFFF" Offset="0" />
+                <GradientStop Color="#B8FFFFFF" Offset="0.5" />
+                <GradientStop Color="#8CFFFFFF" Offset="1" />
+            </LinearGradientBrush>
+            <SolidColorBrush x:Key="ShellTabSelectedBorderBrush" Color="#FF1F8FE6" />
+            <SolidColorBrush x:Key="ShellTabIndicatorBrush" Color="#FF1F8FE6" />
 
             <LinearGradientBrush x:Key="ShellButtonBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#52FFFFFF" Offset="0" />
-                <GradientStop Color="#2CFFFFFF" Offset="1" />
+                <GradientStop Color="#D0FFFFFF" Offset="0" />
+                <GradientStop Color="#88FFFFFF" Offset="0.48" />
+                <GradientStop Color="#52D8EEF8" Offset="0.52" />
+                <GradientStop Color="#68C8E4F4" Offset="1" />
             </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellButtonBorderBrush" Color="#7CFFFFFF" />
-            <SolidColorBrush x:Key="ShellButtonForegroundBrush" Color="#FF103048" />
-            <SolidColorBrush x:Key="ShellInputBackgroundBrush" Color="#7AFFFFFF" />
-            <SolidColorBrush x:Key="ShellInputBorderBrush" Color="#8EBFE0EC" />
+            <SolidColorBrush x:Key="ShellButtonBorderBrush" Color="#B0FFFFFF" />
+            <SolidColorBrush x:Key="ShellButtonForegroundBrush" Color="#FF0C2A48" />
+            <SolidColorBrush x:Key="BreadcrumbBarNormalForegroundBrush" Color="#FF0C2A48" />
+            <SolidColorBrush x:Key="BreadcrumbBarHoverForegroundBrush" Color="#E02A4A64" />
+            <SolidColorBrush x:Key="BreadcrumbBarPressedForegroundBrush" Color="#C02A4A64" />
+            <SolidColorBrush x:Key="BreadcrumbBarCurrentNormalForegroundBrush" Color="#FF0C2A48" />
+            <SolidColorBrush x:Key="BreadcrumbBarForegroundBrush" Color="#FF0C2A48" />
+            <SolidColorBrush x:Key="ShellInputBackgroundBrush" Color="#B8FFFFFF" />
+            <SolidColorBrush x:Key="ShellInputBorderBrush" Color="#A0A8D8F0" />
 
-            <SolidColorBrush x:Key="ShellCommandStripBackgroundBrush" Color="#30FFFFFF" />
-            <SolidColorBrush x:Key="ShellCommandStripBorderBrush" Color="#64BFE0EC" />
+            <LinearGradientBrush x:Key="ShellCommandStripBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#72FFFFFF" Offset="0" />
+                <GradientStop Color="#40FFFFFF" Offset="1" />
+            </LinearGradientBrush>
+            <SolidColorBrush x:Key="ShellCommandStripBorderBrush" Color="#88A8D8F0" />
             <LinearGradientBrush x:Key="ShellCommandButtonBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#68FFFFFF" Offset="0" />
-                <GradientStop Color="#3AFFFFFF" Offset="1" />
+                <GradientStop Color="#D8FFFFFF" Offset="0" />
+                <GradientStop Color="#90FFFFFF" Offset="0.5" />
+                <GradientStop Color="#60C8E4F4" Offset="1" />
             </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellCommandButtonBorderBrush" Color="#7AFFFFFF" />
-            <SolidColorBrush x:Key="ShellCommandButtonForegroundBrush" Color="#FF103048" />
+            <SolidColorBrush x:Key="ShellCommandButtonBorderBrush" Color="#B0FFFFFF" />
+            <SolidColorBrush x:Key="ShellCommandButtonForegroundBrush" Color="#FF0C2A48" />
             <LinearGradientBrush x:Key="ShellCommandPrimaryButtonBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#FF8FE3F2" Offset="0" />
-                <GradientStop Color="#FF36BEDC" Offset="0.5" />
-                <GradientStop Color="#FF1499B8" Offset="1" />
+                <GradientStop Color="#FFB8E8FC" Offset="0" />
+                <GradientStop Color="#FF4AB4E8" Offset="0.48" />
+                <GradientStop Color="#FF1F8FE6" Offset="0.52" />
+                <GradientStop Color="#FF1670C0" Offset="1" />
             </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellCommandPrimaryButtonForegroundBrush" Color="#FF053038" />
+            <SolidColorBrush x:Key="ShellCommandPrimaryButtonForegroundBrush" Color="#FF042438" />
 
             <LinearGradientBrush x:Key="ShellSurfaceBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#62FFFFFF" Offset="0" />
-                <GradientStop Color="#42FFFFFF" Offset="1" />
+                <GradientStop Color="#A8FFFFFF" Offset="0" />
+                <GradientStop Color="#78FFFFFF" Offset="0.55" />
+                <GradientStop Color="#58F0F6FA" Offset="1" />
             </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellSurfaceBorderBrush" Color="#86C7E4EE" />
-            <SolidColorBrush x:Key="ShellSubtleBorderBrush" Color="#4CFFFFFF" />
-            <SolidColorBrush x:Key="ShellSplitterBrush" Color="#58FFFFFF" />
+            <SolidColorBrush x:Key="ShellSurfaceBorderBrush" Color="#A8B8DCE8" />
+            <SolidColorBrush x:Key="ShellSubtleBorderBrush" Color="#70FFFFFF" />
+            <SolidColorBrush x:Key="ShellSplitterBrush" Color="#70A8D0E0" />
+            <SolidColorBrush x:Key="ShellSplitterHoverBrush" Color="#C01F8FE6" />
+            <SolidColorBrush x:Key="ScrollBarThumbFill" Color="#90A8D0E0" />
+            <SolidColorBrush x:Key="ScrollBarThumbFillPointerOver" Color="#C01F8FE6" />
+            <SolidColorBrush x:Key="ScrollBarThumbFillPressed" Color="#E01F8FE6" />
+            <SolidColorBrush x:Key="ScrollBarThumbFillDisabled" Color="#40A8D0E0" />
+            <SolidColorBrush x:Key="ScrollBarButtonArrowForeground" Color="#A02A4A64" />
+            <SolidColorBrush x:Key="ScrollBarButtonArrowForegroundPointerOver" Color="#FF0C2A48" />
+            <SolidColorBrush x:Key="ScrollBarButtonArrowForegroundPressed" Color="#FF0C2A48" />
+            <SolidColorBrush x:Key="ScrollBarPanningThumbBackground" Color="#90A8D0E0" />
 
             <LinearGradientBrush x:Key="ShellPanelHighlightStripBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#B0FFFFFF" Offset="0" />
+                <GradientStop Color="#EEFFFFFF" Offset="0" />
+                <GradientStop Color="#60FFFFFF" Offset="0.55" />
                 <GradientStop Color="#00FFFFFF" Offset="1" />
             </LinearGradientBrush>
             <LinearGradientBrush x:Key="ShellAeroAccentGlowBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#5040C8E2" Offset="0" />
-                <GradientStop Color="#301499B8" Offset="1" />
+                <GradientStop Color="#7048C0F0" Offset="0" />
+                <GradientStop Color="#401F8FE6" Offset="1" />
             </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellAeroAccentGlowBorderBrush" Color="#FF1499B8" />
+            <SolidColorBrush x:Key="ShellAeroAccentGlowBorderBrush" Color="#FF1F8FE6" />
             <LinearGradientBrush x:Key="ShellGlossButtonHighlightBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#8AFFFFFF" Offset="0" />
+                <GradientStop Color="#EEFFFFFF" Offset="0" />
+                <GradientStop Color="#70FFFFFF" Offset="0.55" />
                 <GradientStop Color="#10FFFFFF" Offset="1" />
             </LinearGradientBrush>
+            <LinearGradientBrush x:Key="ShellGlossCapBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#C8FFFFFF" Offset="0" />
+                <GradientStop Color="#40FFFFFF" Offset="0.7" />
+                <GradientStop Color="#00FFFFFF" Offset="1" />
+            </LinearGradientBrush>
             <LinearGradientBrush x:Key="ShellButtonHoverBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#7EE6F7FB" Offset="0" />
-                <GradientStop Color="#4ABFEAF2" Offset="1" />
+                <GradientStop Color="#F0FFFFFF" Offset="0" />
+                <GradientStop Color="#A0E0F4FC" Offset="0.5" />
+                <GradientStop Color="#78B8E4F4" Offset="1" />
             </LinearGradientBrush>
             <LinearGradientBrush x:Key="ShellButtonPressedBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#66B4E6F0" Offset="0" />
-                <GradientStop Color="#449BD9E6" Offset="1" />
+                <GradientStop Color="#80B0D8E8" Offset="0" />
+                <GradientStop Color="#A088C8E0" Offset="0.5" />
+                <GradientStop Color="#B070B0D0" Offset="1" />
             </LinearGradientBrush>
             <LinearGradientBrush x:Key="ShellListItemHoverBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#4EDCF4FA" Offset="0" />
-                <GradientStop Color="#26BFEAF2" Offset="1" />
+                <GradientStop Color="#78D8F0FA" Offset="0" />
+                <GradientStop Color="#48B8E0F0" Offset="1" />
             </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellListItemHoverBorderBrush" Color="#7C7FCBE0" />
+            <SolidColorBrush x:Key="ShellListItemHoverBorderBrush" Color="#A060C0E0" />
             <LinearGradientBrush x:Key="ShellSelectionBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#6258CFE6" Offset="0" />
-                <GradientStop Color="#2E29A6C4" Offset="1" />
+                <GradientStop Color="#A068D0F0" Offset="0" />
+                <GradientStop Color="#7028A0D8" Offset="0.5" />
+                <GradientStop Color="#581F8FE6" Offset="1" />
             </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellSelectionBorderBrush" Color="#C01499B8" />
+            <SolidColorBrush x:Key="ShellSelectionBorderBrush" Color="#E01F8FE6" />
 
-            <SolidColorBrush x:Key="ShellGlassEdgeSeparatorBrush" Color="#3A8FBED2" />
-            <SolidColorBrush x:Key="ShellPanelTopSheenBrush" Color="Transparent" />
-            <SolidColorBrush x:Key="ShellPanelBottomTintBrush" Color="Transparent" />
-            <SolidColorBrush x:Key="ShellGlassInsetBorderBrush" Color="Transparent" />
-            <SolidColorBrush x:Key="ShellChromeShadowStripBrush" Color="Transparent" />
-            <SolidColorBrush x:Key="ShellChromeHighlightStripBrush" Color="Transparent" />
+            <SolidColorBrush x:Key="ShellGlassEdgeSeparatorBrush" Color="#6088B8D0" />
+            <LinearGradientBrush x:Key="ShellPanelTopSheenBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#B0FFFFFF" Offset="0" />
+                <GradientStop Color="#40FFFFFF" Offset="0.4" />
+                <GradientStop Color="#00FFFFFF" Offset="1" />
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="ShellPanelBottomTintBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#00000000" Offset="0" />
+                <GradientStop Color="#18088AB8" Offset="0.65" />
+                <GradientStop Color="#28068AB0" Offset="1" />
+            </LinearGradientBrush>
+            <SolidColorBrush x:Key="ShellGlassInsetBorderBrush" Color="#38000000" />
+            <SolidColorBrush x:Key="ShellChromeShadowStripBrush" Color="#28000000" />
+            <SolidColorBrush x:Key="ShellChromeHighlightStripBrush" Color="#C0FFFFFF" />
 
             <SolidColorBrush x:Key="ShellIconForegroundBrush" Color="#FF0C2A46" />
             <SolidColorBrush x:Key="ShellIconHighlightBrush" Color="#FFFFFFFF" />
@@ -124,130 +179,186 @@
             <SolidColorBrush x:Key="ShellToastBorderBrush" Color="#C034C9E6" />
             <SolidColorBrush x:Key="ShellToastForegroundBrush" Color="#FFFFFFFF" />
             <SolidColorBrush x:Key="ShellToastIconForegroundBrush" Color="#FFE8F8FF" />
+            <SolidColorBrush x:Key="ShellCriticalForegroundBrush" Color="#FFE85A5A" />
 
-            <AcrylicBrush x:Key="ShellMenuFlyoutBackgroundBrush" TintColor="#EAF6FB" TintOpacity="0.55" TintLuminosityOpacity="0.82" FallbackColor="#EEF7FB" />
-            <SolidColorBrush x:Key="ShellMenuFlyoutBorderBrush" Color="#7079B7CC" />
-            <SolidColorBrush x:Key="ShellMenuFlyoutForegroundBrush" Color="#FF143247" />
+            <AcrylicBrush x:Key="ShellMenuFlyoutBackgroundBrush" TintColor="#EAF6FB" TintOpacity="0.62" TintLuminosityOpacity="0.88" FallbackColor="#F2F8FC" />
+            <SolidColorBrush x:Key="ShellMenuFlyoutBorderBrush" Color="#90A0D0E4" />
+            <SolidColorBrush x:Key="ShellMenuFlyoutForegroundBrush" Color="#FF0E2E48" />
             <SolidColorBrush x:Key="ShellMenuFlyoutSecondaryForegroundBrush" Color="#A0324E6E" />
             <LinearGradientBrush x:Key="ShellMenuFlyoutItemHoverBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#FFCDEFF7" Offset="0" />
-                <GradientStop Color="#FFA6DDEC" Offset="1" />
+                <GradientStop Color="#FFD0F0FA" Offset="0" />
+                <GradientStop Color="#FF90D4EC" Offset="1" />
             </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellMenuFlyoutItemHoverBorderBrush" Color="#FF54B6D2" />
+            <SolidColorBrush x:Key="ShellMenuFlyoutItemHoverBorderBrush" Color="#FF48B0D8" />
             <LinearGradientBrush x:Key="ShellMenuFlyoutItemPressedBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#FFA6DBEA" Offset="0" />
-                <GradientStop Color="#FF7DC3DA" Offset="1" />
+                <GradientStop Color="#FF90D0E8" Offset="0" />
+                <GradientStop Color="#FF68B4D4" Offset="1" />
             </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellMenuFlyoutSeparatorBrush" Color="#508FBED2" />
+            <SolidColorBrush x:Key="ShellMenuFlyoutSeparatorBrush" Color="#6088B8D0" />
         </ResourceDictionary>
 
         <!-- Section: Light (mirrors Default) -->
         <ResourceDictionary x:Key="Light">
-            <SolidColorBrush x:Key="FilesPlusPlusAccentBrush" Color="#FF1499B8" />
-            <SolidColorBrush x:Key="ShellAccentBrush" Color="#FF1499B8" />
+            <SolidColorBrush x:Key="FilesPlusPlusAccentBrush" Color="#FF1F8FE6" />
+            <SolidColorBrush x:Key="ShellAccentBrush" Color="#FF1F8FE6" />
             <SolidColorBrush x:Key="ShellWindowBackgroundBrush" Color="Transparent" />
 
-            <SolidColorBrush x:Key="ShellBackdropOrbBrush" Color="Transparent" />
-            <SolidColorBrush x:Key="ShellBackdropTopGlowBrush" Color="Transparent" />
-            <LinearGradientBrush x:Key="ShellTopChromeScrimBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#2EFFFFFF" Offset="0" />
-                <GradientStop Color="#0CFFFFFF" Offset="0.55" />
+            <RadialGradientBrush x:Key="ShellBackdropOrbBrush" Center="0.5,0.0" RadiusX="0.85" RadiusY="0.55">
+                <GradientStop Color="#5522A0E8" Offset="0" />
+                <GradientStop Color="#1822A0E8" Offset="0.55" />
                 <GradientStop Color="#00000000" Offset="1" />
+            </RadialGradientBrush>
+            <LinearGradientBrush x:Key="ShellBackdropTopGlowBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#6638B4F0" Offset="0" />
+                <GradientStop Color="#2838B4F0" Offset="0.35" />
+                <GradientStop Color="#00000000" Offset="1" />
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="ShellTopChromeScrimBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#78FFFFFF" Offset="0" />
+                <GradientStop Color="#38FFFFFF" Offset="0.45" />
+                <GradientStop Color="#08FFFFFF" Offset="1" />
             </LinearGradientBrush>
 
             <LinearGradientBrush x:Key="ShellTitleBarBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#5AFFFFFF" Offset="0" />
-                <GradientStop Color="#34FFFFFF" Offset="1" />
-            </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellTitleBarBorderBrush" Color="#80FFFFFF" />
-            <SolidColorBrush x:Key="ShellTitleBarForegroundBrush" Color="#FF103048" />
-            <SolidColorBrush x:Key="ShellTitleBarSecondaryForegroundBrush" Color="#A0335169" />
-            <SolidColorBrush x:Key="ShellTitleBarButtonHoverBackgroundBrush" Color="#3F1499B8" />
-            <SolidColorBrush x:Key="ShellTitleBarButtonPressedBackgroundBrush" Color="#5C0F7B96" />
-
-            <SolidColorBrush x:Key="ShellTabStripBackgroundBrush" Color="#34FFFFFF" />
-            <SolidColorBrush x:Key="ShellTabStripBorderBrush" Color="#6EBFE0EC" />
-            <SolidColorBrush x:Key="ShellTabBackgroundBrush" Color="#2CFFFFFF" />
-            <SolidColorBrush x:Key="ShellTabBorderBrush" Color="#66FFFFFF" />
-            <SolidColorBrush x:Key="ShellTabForegroundBrush" Color="#FF113048" />
-            <SolidColorBrush x:Key="ShellTabCloseForegroundBrush" Color="#B0405D78" />
-            <LinearGradientBrush x:Key="ShellTabSelectedBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#86FFFFFF" Offset="0" />
+                <GradientStop Color="#C8FFFFFF" Offset="0" />
+                <GradientStop Color="#8AFFFFFF" Offset="0.45" />
                 <GradientStop Color="#5CFFFFFF" Offset="1" />
             </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellTabSelectedBorderBrush" Color="#FF1499B8" />
-            <SolidColorBrush x:Key="ShellTabIndicatorBrush" Color="#FF1499B8" />
+            <SolidColorBrush x:Key="ShellTitleBarBorderBrush" Color="#B0FFFFFF" />
+            <SolidColorBrush x:Key="ShellTitleBarForegroundBrush" Color="#FF0C2A48" />
+            <SolidColorBrush x:Key="ShellTitleBarSecondaryForegroundBrush" Color="#CC2A4A64" />
+            <SolidColorBrush x:Key="ShellSecondaryForegroundBrush" Color="#E02A4A64" />
+            <SolidColorBrush x:Key="ShellTitleBarButtonHoverBackgroundBrush" Color="#5522A0E8" />
+            <SolidColorBrush x:Key="ShellTitleBarButtonPressedBackgroundBrush" Color="#701F7CC0" />
+            <SolidColorBrush x:Key="ShellTitleBarButtonInactiveForegroundBrush" Color="#A02A4A64" />
+
+            <LinearGradientBrush x:Key="ShellTabStripBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#6AFFFFFF" Offset="0" />
+                <GradientStop Color="#38FFFFFF" Offset="1" />
+            </LinearGradientBrush>
+            <SolidColorBrush x:Key="ShellTabStripBorderBrush" Color="#90A8D8F0" />
+            <SolidColorBrush x:Key="ShellTabBackgroundBrush" Color="#3AFFFFFF" />
+            <SolidColorBrush x:Key="ShellTabBorderBrush" Color="#88FFFFFF" />
+            <SolidColorBrush x:Key="ShellTabForegroundBrush" Color="#FF0E2E4A" />
+            <SolidColorBrush x:Key="ShellTabCloseForegroundBrush" Color="#B038566E" />
+            <LinearGradientBrush x:Key="ShellTabSelectedBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#EEFFFFFF" Offset="0" />
+                <GradientStop Color="#B8FFFFFF" Offset="0.5" />
+                <GradientStop Color="#8CFFFFFF" Offset="1" />
+            </LinearGradientBrush>
+            <SolidColorBrush x:Key="ShellTabSelectedBorderBrush" Color="#FF1F8FE6" />
+            <SolidColorBrush x:Key="ShellTabIndicatorBrush" Color="#FF1F8FE6" />
 
             <LinearGradientBrush x:Key="ShellButtonBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#52FFFFFF" Offset="0" />
-                <GradientStop Color="#2CFFFFFF" Offset="1" />
+                <GradientStop Color="#D0FFFFFF" Offset="0" />
+                <GradientStop Color="#88FFFFFF" Offset="0.48" />
+                <GradientStop Color="#52D8EEF8" Offset="0.52" />
+                <GradientStop Color="#68C8E4F4" Offset="1" />
             </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellButtonBorderBrush" Color="#7CFFFFFF" />
-            <SolidColorBrush x:Key="ShellButtonForegroundBrush" Color="#FF103048" />
-            <SolidColorBrush x:Key="ShellInputBackgroundBrush" Color="#7AFFFFFF" />
-            <SolidColorBrush x:Key="ShellInputBorderBrush" Color="#8EBFE0EC" />
+            <SolidColorBrush x:Key="ShellButtonBorderBrush" Color="#B0FFFFFF" />
+            <SolidColorBrush x:Key="ShellButtonForegroundBrush" Color="#FF0C2A48" />
+            <SolidColorBrush x:Key="BreadcrumbBarNormalForegroundBrush" Color="#FF0C2A48" />
+            <SolidColorBrush x:Key="BreadcrumbBarHoverForegroundBrush" Color="#E02A4A64" />
+            <SolidColorBrush x:Key="BreadcrumbBarPressedForegroundBrush" Color="#C02A4A64" />
+            <SolidColorBrush x:Key="BreadcrumbBarCurrentNormalForegroundBrush" Color="#FF0C2A48" />
+            <SolidColorBrush x:Key="BreadcrumbBarForegroundBrush" Color="#FF0C2A48" />
+            <SolidColorBrush x:Key="ShellInputBackgroundBrush" Color="#B8FFFFFF" />
+            <SolidColorBrush x:Key="ShellInputBorderBrush" Color="#A0A8D8F0" />
 
-            <SolidColorBrush x:Key="ShellCommandStripBackgroundBrush" Color="#30FFFFFF" />
-            <SolidColorBrush x:Key="ShellCommandStripBorderBrush" Color="#64BFE0EC" />
+            <LinearGradientBrush x:Key="ShellCommandStripBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#72FFFFFF" Offset="0" />
+                <GradientStop Color="#40FFFFFF" Offset="1" />
+            </LinearGradientBrush>
+            <SolidColorBrush x:Key="ShellCommandStripBorderBrush" Color="#88A8D8F0" />
             <LinearGradientBrush x:Key="ShellCommandButtonBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#68FFFFFF" Offset="0" />
-                <GradientStop Color="#3AFFFFFF" Offset="1" />
+                <GradientStop Color="#D8FFFFFF" Offset="0" />
+                <GradientStop Color="#90FFFFFF" Offset="0.5" />
+                <GradientStop Color="#60C8E4F4" Offset="1" />
             </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellCommandButtonBorderBrush" Color="#7AFFFFFF" />
-            <SolidColorBrush x:Key="ShellCommandButtonForegroundBrush" Color="#FF103048" />
+            <SolidColorBrush x:Key="ShellCommandButtonBorderBrush" Color="#B0FFFFFF" />
+            <SolidColorBrush x:Key="ShellCommandButtonForegroundBrush" Color="#FF0C2A48" />
             <LinearGradientBrush x:Key="ShellCommandPrimaryButtonBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#FF8FE3F2" Offset="0" />
-                <GradientStop Color="#FF36BEDC" Offset="0.5" />
-                <GradientStop Color="#FF1499B8" Offset="1" />
+                <GradientStop Color="#FFB8E8FC" Offset="0" />
+                <GradientStop Color="#FF4AB4E8" Offset="0.48" />
+                <GradientStop Color="#FF1F8FE6" Offset="0.52" />
+                <GradientStop Color="#FF1670C0" Offset="1" />
             </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellCommandPrimaryButtonForegroundBrush" Color="#FF053038" />
+            <SolidColorBrush x:Key="ShellCommandPrimaryButtonForegroundBrush" Color="#FF042438" />
 
             <LinearGradientBrush x:Key="ShellSurfaceBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#62FFFFFF" Offset="0" />
-                <GradientStop Color="#42FFFFFF" Offset="1" />
+                <GradientStop Color="#A8FFFFFF" Offset="0" />
+                <GradientStop Color="#78FFFFFF" Offset="0.55" />
+                <GradientStop Color="#58F0F6FA" Offset="1" />
             </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellSurfaceBorderBrush" Color="#86C7E4EE" />
-            <SolidColorBrush x:Key="ShellSubtleBorderBrush" Color="#4CFFFFFF" />
-            <SolidColorBrush x:Key="ShellSplitterBrush" Color="#58FFFFFF" />
+            <SolidColorBrush x:Key="ShellSurfaceBorderBrush" Color="#A8B8DCE8" />
+            <SolidColorBrush x:Key="ShellSubtleBorderBrush" Color="#70FFFFFF" />
+            <SolidColorBrush x:Key="ShellSplitterBrush" Color="#70A8D0E0" />
+            <SolidColorBrush x:Key="ShellSplitterHoverBrush" Color="#C01F8FE6" />
+            <SolidColorBrush x:Key="ScrollBarThumbFill" Color="#90A8D0E0" />
+            <SolidColorBrush x:Key="ScrollBarThumbFillPointerOver" Color="#C01F8FE6" />
+            <SolidColorBrush x:Key="ScrollBarThumbFillPressed" Color="#E01F8FE6" />
+            <SolidColorBrush x:Key="ScrollBarThumbFillDisabled" Color="#40A8D0E0" />
+            <SolidColorBrush x:Key="ScrollBarButtonArrowForeground" Color="#A02A4A64" />
+            <SolidColorBrush x:Key="ScrollBarButtonArrowForegroundPointerOver" Color="#FF0C2A48" />
+            <SolidColorBrush x:Key="ScrollBarButtonArrowForegroundPressed" Color="#FF0C2A48" />
+            <SolidColorBrush x:Key="ScrollBarPanningThumbBackground" Color="#90A8D0E0" />
 
             <LinearGradientBrush x:Key="ShellPanelHighlightStripBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#B0FFFFFF" Offset="0" />
+                <GradientStop Color="#EEFFFFFF" Offset="0" />
+                <GradientStop Color="#60FFFFFF" Offset="0.55" />
                 <GradientStop Color="#00FFFFFF" Offset="1" />
             </LinearGradientBrush>
             <LinearGradientBrush x:Key="ShellAeroAccentGlowBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#5040C8E2" Offset="0" />
-                <GradientStop Color="#301499B8" Offset="1" />
+                <GradientStop Color="#7048C0F0" Offset="0" />
+                <GradientStop Color="#401F8FE6" Offset="1" />
             </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellAeroAccentGlowBorderBrush" Color="#FF1499B8" />
+            <SolidColorBrush x:Key="ShellAeroAccentGlowBorderBrush" Color="#FF1F8FE6" />
             <LinearGradientBrush x:Key="ShellGlossButtonHighlightBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#8AFFFFFF" Offset="0" />
+                <GradientStop Color="#EEFFFFFF" Offset="0" />
+                <GradientStop Color="#70FFFFFF" Offset="0.55" />
                 <GradientStop Color="#10FFFFFF" Offset="1" />
             </LinearGradientBrush>
+            <LinearGradientBrush x:Key="ShellGlossCapBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#C8FFFFFF" Offset="0" />
+                <GradientStop Color="#40FFFFFF" Offset="0.7" />
+                <GradientStop Color="#00FFFFFF" Offset="1" />
+            </LinearGradientBrush>
             <LinearGradientBrush x:Key="ShellButtonHoverBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#7EE6F7FB" Offset="0" />
-                <GradientStop Color="#4ABFEAF2" Offset="1" />
+                <GradientStop Color="#F0FFFFFF" Offset="0" />
+                <GradientStop Color="#A0E0F4FC" Offset="0.5" />
+                <GradientStop Color="#78B8E4F4" Offset="1" />
             </LinearGradientBrush>
             <LinearGradientBrush x:Key="ShellButtonPressedBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#66B4E6F0" Offset="0" />
-                <GradientStop Color="#449BD9E6" Offset="1" />
+                <GradientStop Color="#80B0D8E8" Offset="0" />
+                <GradientStop Color="#A088C8E0" Offset="0.5" />
+                <GradientStop Color="#B070B0D0" Offset="1" />
             </LinearGradientBrush>
             <LinearGradientBrush x:Key="ShellListItemHoverBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#4EDCF4FA" Offset="0" />
-                <GradientStop Color="#26BFEAF2" Offset="1" />
+                <GradientStop Color="#78D8F0FA" Offset="0" />
+                <GradientStop Color="#48B8E0F0" Offset="1" />
             </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellListItemHoverBorderBrush" Color="#7C7FCBE0" />
+            <SolidColorBrush x:Key="ShellListItemHoverBorderBrush" Color="#A060C0E0" />
             <LinearGradientBrush x:Key="ShellSelectionBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#6258CFE6" Offset="0" />
-                <GradientStop Color="#2E29A6C4" Offset="1" />
+                <GradientStop Color="#A068D0F0" Offset="0" />
+                <GradientStop Color="#7028A0D8" Offset="0.5" />
+                <GradientStop Color="#581F8FE6" Offset="1" />
             </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellSelectionBorderBrush" Color="#C01499B8" />
+            <SolidColorBrush x:Key="ShellSelectionBorderBrush" Color="#E01F8FE6" />
 
-            <SolidColorBrush x:Key="ShellGlassEdgeSeparatorBrush" Color="#3A8FBED2" />
-            <SolidColorBrush x:Key="ShellPanelTopSheenBrush" Color="Transparent" />
-            <SolidColorBrush x:Key="ShellPanelBottomTintBrush" Color="Transparent" />
-            <SolidColorBrush x:Key="ShellGlassInsetBorderBrush" Color="Transparent" />
-            <SolidColorBrush x:Key="ShellChromeShadowStripBrush" Color="Transparent" />
-            <SolidColorBrush x:Key="ShellChromeHighlightStripBrush" Color="Transparent" />
+            <SolidColorBrush x:Key="ShellGlassEdgeSeparatorBrush" Color="#6088B8D0" />
+            <LinearGradientBrush x:Key="ShellPanelTopSheenBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#B0FFFFFF" Offset="0" />
+                <GradientStop Color="#40FFFFFF" Offset="0.4" />
+                <GradientStop Color="#00FFFFFF" Offset="1" />
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="ShellPanelBottomTintBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#00000000" Offset="0" />
+                <GradientStop Color="#18088AB8" Offset="0.65" />
+                <GradientStop Color="#28068AB0" Offset="1" />
+            </LinearGradientBrush>
+            <SolidColorBrush x:Key="ShellGlassInsetBorderBrush" Color="#38000000" />
+            <SolidColorBrush x:Key="ShellChromeShadowStripBrush" Color="#28000000" />
+            <SolidColorBrush x:Key="ShellChromeHighlightStripBrush" Color="#C0FFFFFF" />
 
             <SolidColorBrush x:Key="ShellIconForegroundBrush" Color="#FF0C2A46" />
             <SolidColorBrush x:Key="ShellIconHighlightBrush" Color="#FFFFFFFF" />
@@ -259,157 +370,214 @@
             <SolidColorBrush x:Key="ShellToastBorderBrush" Color="#C034C9E6" />
             <SolidColorBrush x:Key="ShellToastForegroundBrush" Color="#FFFFFFFF" />
             <SolidColorBrush x:Key="ShellToastIconForegroundBrush" Color="#FFE8F8FF" />
+            <SolidColorBrush x:Key="ShellCriticalForegroundBrush" Color="#FFE85A5A" />
 
-            <AcrylicBrush x:Key="ShellMenuFlyoutBackgroundBrush" TintColor="#EAF6FB" TintOpacity="0.55" TintLuminosityOpacity="0.82" FallbackColor="#EEF7FB" />
-            <SolidColorBrush x:Key="ShellMenuFlyoutBorderBrush" Color="#7079B7CC" />
-            <SolidColorBrush x:Key="ShellMenuFlyoutForegroundBrush" Color="#FF143247" />
+            <AcrylicBrush x:Key="ShellMenuFlyoutBackgroundBrush" TintColor="#EAF6FB" TintOpacity="0.62" TintLuminosityOpacity="0.88" FallbackColor="#F2F8FC" />
+            <SolidColorBrush x:Key="ShellMenuFlyoutBorderBrush" Color="#90A0D0E4" />
+            <SolidColorBrush x:Key="ShellMenuFlyoutForegroundBrush" Color="#FF0E2E48" />
             <SolidColorBrush x:Key="ShellMenuFlyoutSecondaryForegroundBrush" Color="#A0324E6E" />
             <LinearGradientBrush x:Key="ShellMenuFlyoutItemHoverBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#FFCDEFF7" Offset="0" />
-                <GradientStop Color="#FFA6DDEC" Offset="1" />
+                <GradientStop Color="#FFD0F0FA" Offset="0" />
+                <GradientStop Color="#FF90D4EC" Offset="1" />
             </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellMenuFlyoutItemHoverBorderBrush" Color="#FF54B6D2" />
+            <SolidColorBrush x:Key="ShellMenuFlyoutItemHoverBorderBrush" Color="#FF48B0D8" />
             <LinearGradientBrush x:Key="ShellMenuFlyoutItemPressedBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#FFA6DBEA" Offset="0" />
-                <GradientStop Color="#FF7DC3DA" Offset="1" />
+                <GradientStop Color="#FF90D0E8" Offset="0" />
+                <GradientStop Color="#FF68B4D4" Offset="1" />
             </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellMenuFlyoutSeparatorBrush" Color="#508FBED2" />
+            <SolidColorBrush x:Key="ShellMenuFlyoutSeparatorBrush" Color="#6088B8D0" />
         </ResourceDictionary>
 
-        <!-- Section: Dark (refined dark glass) -->
+        <!-- Section: Dark (frosted cool glass over dark wallpaper) -->
         <ResourceDictionary x:Key="Dark">
-            <SolidColorBrush x:Key="FilesPlusPlusAccentBrush" Color="#FF34C9E6" />
-            <SolidColorBrush x:Key="ShellAccentBrush" Color="#FF34C9E6" />
+            <SolidColorBrush x:Key="FilesPlusPlusAccentBrush" Color="#FF5AB4E8" />
+            <SolidColorBrush x:Key="ShellAccentBrush" Color="#FF5AB4E8" />
             <SolidColorBrush x:Key="ShellWindowBackgroundBrush" Color="Transparent" />
 
-            <SolidColorBrush x:Key="ShellBackdropOrbBrush" Color="Transparent" />
-            <SolidColorBrush x:Key="ShellBackdropTopGlowBrush" Color="Transparent" />
-            <LinearGradientBrush x:Key="ShellTopChromeScrimBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#2634C9E6" Offset="0" />
-                <GradientStop Color="#0C18596E" Offset="0.55" />
+            <!-- Why: Soft cool highlights instead of a heavy teal wash so chrome reads as glass, not plastic. -->
+            <RadialGradientBrush x:Key="ShellBackdropOrbBrush" Center="0.5,0.0" RadiusX="0.95" RadiusY="0.55">
+                <GradientStop Color="#38FFFFFF" Offset="0" />
+                <GradientStop Color="#185AB4E8" Offset="0.45" />
+                <GradientStop Color="#00000000" Offset="1" />
+            </RadialGradientBrush>
+            <LinearGradientBrush x:Key="ShellBackdropTopGlowBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#50FFFFFF" Offset="0" />
+                <GradientStop Color="#1A5AB4E8" Offset="0.45" />
                 <GradientStop Color="#00000000" Offset="1" />
             </LinearGradientBrush>
+            <LinearGradientBrush x:Key="ShellTopChromeScrimBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#55FFFFFF" Offset="0" />
+                <GradientStop Color="#22FFFFFF" Offset="0.4" />
+                <GradientStop Color="#08101820" Offset="1" />
+            </LinearGradientBrush>
 
-            <!-- Why: Low-alpha white framing keeps panels glass-like over the dark backdrop instead of reading as solid black. -->
             <LinearGradientBrush x:Key="ShellTitleBarBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#30FFFFFF" Offset="0" />
-                <GradientStop Color="#16FFFFFF" Offset="1" />
+                <GradientStop Color="#48FFFFFF" Offset="0" />
+                <GradientStop Color="#28FFFFFF" Offset="0.4" />
+                <GradientStop Color="#14182028" Offset="1" />
             </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellTitleBarBorderBrush" Color="#4AAFD6E6" />
-            <SolidColorBrush x:Key="ShellTitleBarForegroundBrush" Color="#FFF4FAFF" />
-            <SolidColorBrush x:Key="ShellTitleBarSecondaryForegroundBrush" Color="#C8BCD6E6" />
-            <SolidColorBrush x:Key="ShellTitleBarButtonHoverBackgroundBrush" Color="#5034C9E6" />
-            <SolidColorBrush x:Key="ShellTitleBarButtonPressedBackgroundBrush" Color="#701B9FBE" />
+            <SolidColorBrush x:Key="ShellTitleBarBorderBrush" Color="#50C8D8E8" />
+            <SolidColorBrush x:Key="ShellTitleBarForegroundBrush" Color="#FFFFFFFF" />
+            <SolidColorBrush x:Key="ShellTitleBarSecondaryForegroundBrush" Color="#FFE0E8F0" />
+            <SolidColorBrush x:Key="ShellSecondaryForegroundBrush" Color="#FFC8D4E0" />
+            <SolidColorBrush x:Key="ShellTitleBarButtonHoverBackgroundBrush" Color="#48FFFFFF" />
+            <SolidColorBrush x:Key="ShellTitleBarButtonPressedBackgroundBrush" Color="#70A8D4E8" />
+            <SolidColorBrush x:Key="ShellTitleBarButtonInactiveForegroundBrush" Color="#B0C0D0" />
 
-            <SolidColorBrush x:Key="ShellTabStripBackgroundBrush" Color="#18FFFFFF" />
-            <SolidColorBrush x:Key="ShellTabStripBorderBrush" Color="#3CA9CFE0" />
-            <SolidColorBrush x:Key="ShellTabBackgroundBrush" Color="#14FFFFFF" />
-            <SolidColorBrush x:Key="ShellTabBorderBrush" Color="#38FFFFFF" />
-            <SolidColorBrush x:Key="ShellTabForegroundBrush" Color="#FFEFF6FF" />
-            <SolidColorBrush x:Key="ShellTabCloseForegroundBrush" Color="#C8B5C8DE" />
-            <LinearGradientBrush x:Key="ShellTabSelectedBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#3CFFFFFF" Offset="0" />
-                <GradientStop Color="#1CFFFFFF" Offset="1" />
-            </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellTabSelectedBorderBrush" Color="#FF34C9E6" />
-            <SolidColorBrush x:Key="ShellTabIndicatorBrush" Color="#FF34C9E6" />
-
-            <LinearGradientBrush x:Key="ShellButtonBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#38FFFFFF" Offset="0" />
-                <GradientStop Color="#16FFFFFF" Offset="1" />
-            </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellButtonBorderBrush" Color="#48FFFFFF" />
-            <SolidColorBrush x:Key="ShellButtonForegroundBrush" Color="#FFF1F7FF" />
-            <SolidColorBrush x:Key="ShellInputBackgroundBrush" Color="#24FFFFFF" />
-            <SolidColorBrush x:Key="ShellInputBorderBrush" Color="#46A9CFE0" />
-
-            <SolidColorBrush x:Key="ShellCommandStripBackgroundBrush" Color="#16FFFFFF" />
-            <SolidColorBrush x:Key="ShellCommandStripBorderBrush" Color="#38A9CFE0" />
-            <LinearGradientBrush x:Key="ShellCommandButtonBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#38FFFFFF" Offset="0" />
-                <GradientStop Color="#16FFFFFF" Offset="1" />
-            </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellCommandButtonBorderBrush" Color="#48FFFFFF" />
-            <SolidColorBrush x:Key="ShellCommandButtonForegroundBrush" Color="#FFF1F7FF" />
-            <LinearGradientBrush x:Key="ShellCommandPrimaryButtonBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#FF8DEAF8" Offset="0" />
-                <GradientStop Color="#FF34C9E6" Offset="0.5" />
-                <GradientStop Color="#FF1B9FBE" Offset="1" />
-            </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellCommandPrimaryButtonForegroundBrush" Color="#FF052730" />
-
-            <LinearGradientBrush x:Key="ShellSurfaceBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
+            <LinearGradientBrush x:Key="ShellTabStripBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
                 <GradientStop Color="#28FFFFFF" Offset="0" />
                 <GradientStop Color="#10FFFFFF" Offset="1" />
             </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellSurfaceBorderBrush" Color="#4ABBD9E8" />
-            <SolidColorBrush x:Key="ShellSubtleBorderBrush" Color="#22FFFFFF" />
-            <SolidColorBrush x:Key="ShellSplitterBrush" Color="#30FFFFFF" />
+            <SolidColorBrush x:Key="ShellTabStripBorderBrush" Color="#40D0E4F0" />
+            <SolidColorBrush x:Key="ShellTabBackgroundBrush" Color="#28FFFFFF" />
+            <SolidColorBrush x:Key="ShellTabBorderBrush" Color="#60FFFFFF" />
+            <SolidColorBrush x:Key="ShellTabForegroundBrush" Color="#FFFFFFFF" />
+            <SolidColorBrush x:Key="ShellTabCloseForegroundBrush" Color="#FFD0DCE8" />
+            <LinearGradientBrush x:Key="ShellTabSelectedBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#70FFFFFF" Offset="0" />
+                <GradientStop Color="#40FFFFFF" Offset="0.45" />
+                <GradientStop Color="#22FFFFFF" Offset="1" />
+            </LinearGradientBrush>
+            <SolidColorBrush x:Key="ShellTabSelectedBorderBrush" Color="#90FFFFFF" />
+            <SolidColorBrush x:Key="ShellTabIndicatorBrush" Color="#FF7EC8F0" />
+
+            <LinearGradientBrush x:Key="ShellButtonBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#50FFFFFF" Offset="0" />
+                <GradientStop Color="#28FFFFFF" Offset="0.48" />
+                <GradientStop Color="#18FFFFFF" Offset="0.52" />
+                <GradientStop Color="#20101820" Offset="1" />
+            </LinearGradientBrush>
+            <SolidColorBrush x:Key="ShellButtonBorderBrush" Color="#68FFFFFF" />
+            <SolidColorBrush x:Key="ShellButtonForegroundBrush" Color="#FFFFFFFF" />
+            <SolidColorBrush x:Key="BreadcrumbBarNormalForegroundBrush" Color="#FFFFFFFF" />
+            <SolidColorBrush x:Key="BreadcrumbBarHoverForegroundBrush" Color="#FFE8F0F8" />
+            <SolidColorBrush x:Key="BreadcrumbBarPressedForegroundBrush" Color="#FFD0DCE8" />
+            <SolidColorBrush x:Key="BreadcrumbBarCurrentNormalForegroundBrush" Color="#FFFFFFFF" />
+            <SolidColorBrush x:Key="BreadcrumbBarForegroundBrush" Color="#FFFFFFFF" />
+            <SolidColorBrush x:Key="ShellInputBackgroundBrush" Color="#40101820" />
+            <SolidColorBrush x:Key="ShellInputBorderBrush" Color="#68D0E0EC" />
+
+            <LinearGradientBrush x:Key="ShellCommandStripBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#28FFFFFF" Offset="0" />
+                <GradientStop Color="#14101820" Offset="1" />
+            </LinearGradientBrush>
+            <SolidColorBrush x:Key="ShellCommandStripBorderBrush" Color="#48D0E0EC" />
+            <LinearGradientBrush x:Key="ShellCommandButtonBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#48FFFFFF" Offset="0" />
+                <GradientStop Color="#24FFFFFF" Offset="0.5" />
+                <GradientStop Color="#18101820" Offset="1" />
+            </LinearGradientBrush>
+            <SolidColorBrush x:Key="ShellCommandButtonBorderBrush" Color="#68FFFFFF" />
+            <SolidColorBrush x:Key="ShellCommandButtonForegroundBrush" Color="#FFFFFFFF" />
+            <LinearGradientBrush x:Key="ShellCommandPrimaryButtonBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#FFC0E8F8" Offset="0" />
+                <GradientStop Color="#FF5AB4E8" Offset="0.48" />
+                <GradientStop Color="#FF2A8AB8" Offset="0.52" />
+                <GradientStop Color="#FF186088" Offset="1" />
+            </LinearGradientBrush>
+            <SolidColorBrush x:Key="ShellCommandPrimaryButtonForegroundBrush" Color="#FF052730" />
+
+            <!-- Why: Darker pane glass keeps white text crisp; heavy frost washed out contrast. -->
+            <LinearGradientBrush x:Key="ShellSurfaceBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#38182028" Offset="0" />
+                <GradientStop Color="#4A101820" Offset="0.45" />
+                <GradientStop Color="#5A0C1218" Offset="1" />
+            </LinearGradientBrush>
+            <SolidColorBrush x:Key="ShellSurfaceBorderBrush" Color="#60D8E8F0" />
+            <SolidColorBrush x:Key="ShellSubtleBorderBrush" Color="#48FFFFFF" />
+            <SolidColorBrush x:Key="ShellSplitterBrush" Color="#60D0E0EC" />
+            <SolidColorBrush x:Key="ShellSplitterHoverBrush" Color="#B05AB4E8" />
+            <SolidColorBrush x:Key="ScrollBarThumbFill" Color="#90C0D8E8" />
+            <SolidColorBrush x:Key="ScrollBarThumbFillPointerOver" Color="#C05AB4E8" />
+            <SolidColorBrush x:Key="ScrollBarThumbFillPressed" Color="#E05AB4E8" />
+            <SolidColorBrush x:Key="ScrollBarThumbFillDisabled" Color="#40C0D8E8" />
+            <SolidColorBrush x:Key="ScrollBarButtonArrowForeground" Color="#FFE0EAF0" />
+            <SolidColorBrush x:Key="ScrollBarButtonArrowForegroundPointerOver" Color="#FFFFFFFF" />
+            <SolidColorBrush x:Key="ScrollBarButtonArrowForegroundPressed" Color="#FFFFFFFF" />
+            <SolidColorBrush x:Key="ScrollBarPanningThumbBackground" Color="#90C0D8E8" />
 
             <LinearGradientBrush x:Key="ShellPanelHighlightStripBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#5AFFFFFF" Offset="0" />
+                <GradientStop Color="#50FFFFFF" Offset="0" />
+                <GradientStop Color="#20FFFFFF" Offset="0.5" />
                 <GradientStop Color="#00FFFFFF" Offset="1" />
             </LinearGradientBrush>
             <LinearGradientBrush x:Key="ShellAeroAccentGlowBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#5534C9E6" Offset="0" />
-                <GradientStop Color="#2A1B7E96" Offset="1" />
+                <GradientStop Color="#605AB4E8" Offset="0" />
+                <GradientStop Color="#302A8AB8" Offset="1" />
             </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellAeroAccentGlowBorderBrush" Color="#FF34C9E6" />
+            <SolidColorBrush x:Key="ShellAeroAccentGlowBorderBrush" Color="#FF5AB4E8" />
             <LinearGradientBrush x:Key="ShellGlossButtonHighlightBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#66FFFFFF" Offset="0" />
-                <GradientStop Color="#10FFFFFF" Offset="1" />
+                <GradientStop Color="#70FFFFFF" Offset="0" />
+                <GradientStop Color="#30FFFFFF" Offset="0.55" />
+                <GradientStop Color="#08FFFFFF" Offset="1" />
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="ShellGlossCapBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#60FFFFFF" Offset="0" />
+                <GradientStop Color="#20FFFFFF" Offset="0.7" />
+                <GradientStop Color="#00FFFFFF" Offset="1" />
             </LinearGradientBrush>
             <LinearGradientBrush x:Key="ShellButtonHoverBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#4634C9E6" Offset="0" />
-                <GradientStop Color="#201B6E86" Offset="1" />
+                <GradientStop Color="#585AB4E8" Offset="0" />
+                <GradientStop Color="#382A8AB8" Offset="0.5" />
+                <GradientStop Color="#28186078" Offset="1" />
             </LinearGradientBrush>
             <LinearGradientBrush x:Key="ShellButtonPressedBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#6628B0CE" Offset="0" />
-                <GradientStop Color="#34146C84" Offset="1" />
+                <GradientStop Color="#682A9AC0" Offset="0" />
+                <GradientStop Color="#50186078" Offset="1" />
             </LinearGradientBrush>
             <LinearGradientBrush x:Key="ShellListItemHoverBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#3434C9E6" Offset="0" />
-                <GradientStop Color="#14176E86" Offset="1" />
+                <GradientStop Color="#485AB4E8" Offset="0" />
+                <GradientStop Color="#28186078" Offset="1" />
             </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellListItemHoverBorderBrush" Color="#6634C9E6" />
+            <SolidColorBrush x:Key="ShellListItemHoverBorderBrush" Color="#805AB4E8" />
             <LinearGradientBrush x:Key="ShellSelectionBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#7034C9E6" Offset="0" />
-                <GradientStop Color="#381B86A2" Offset="1" />
+                <GradientStop Color="#885AB4E8" Offset="0" />
+                <GradientStop Color="#582A8AB8" Offset="0.5" />
+                <GradientStop Color="#40186078" Offset="1" />
             </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellSelectionBorderBrush" Color="#E034C9E6" />
+            <SolidColorBrush x:Key="ShellSelectionBorderBrush" Color="#D05AB4E8" />
 
-            <SolidColorBrush x:Key="ShellGlassEdgeSeparatorBrush" Color="#3A4FC0DC" />
-            <SolidColorBrush x:Key="ShellPanelTopSheenBrush" Color="Transparent" />
-            <SolidColorBrush x:Key="ShellPanelBottomTintBrush" Color="Transparent" />
-            <SolidColorBrush x:Key="ShellGlassInsetBorderBrush" Color="Transparent" />
-            <SolidColorBrush x:Key="ShellChromeShadowStripBrush" Color="Transparent" />
-            <SolidColorBrush x:Key="ShellChromeHighlightStripBrush" Color="Transparent" />
+            <SolidColorBrush x:Key="ShellGlassEdgeSeparatorBrush" Color="#58D0E0EC" />
+            <LinearGradientBrush x:Key="ShellPanelTopSheenBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#40FFFFFF" Offset="0" />
+                <GradientStop Color="#18FFFFFF" Offset="0.45" />
+                <GradientStop Color="#00FFFFFF" Offset="1" />
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="ShellPanelBottomTintBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#00000000" Offset="0" />
+                <GradientStop Color="#30060C12" Offset="0.65" />
+                <GradientStop Color="#48040810" Offset="1" />
+            </LinearGradientBrush>
+            <SolidColorBrush x:Key="ShellGlassInsetBorderBrush" Color="#50000000" />
+            <SolidColorBrush x:Key="ShellChromeShadowStripBrush" Color="#40000000" />
+            <SolidColorBrush x:Key="ShellChromeHighlightStripBrush" Color="#60FFFFFF" />
 
-            <SolidColorBrush x:Key="ShellIconForegroundBrush" Color="#FFE8F1FB" />
-            <SolidColorBrush x:Key="ShellIconHighlightBrush" Color="#80FFFFFF" />
+            <SolidColorBrush x:Key="ShellIconForegroundBrush" Color="#FFFFFFFF" />
+            <SolidColorBrush x:Key="ShellIconHighlightBrush" Color="#90FFFFFF" />
             <SolidColorBrush x:Key="ShellIconShadowBrush" Color="#80050E1C" />
             <SolidColorBrush x:Key="ShellFolderIconBrush" Color="#FFF4C76A" />
             <SolidColorBrush x:Key="ShellFileIconBrush" Color="#FF7FD8EC" />
 
-            <SolidColorBrush x:Key="ShellToastBackgroundBrush" Color="#E6123038" />
-            <SolidColorBrush x:Key="ShellToastBorderBrush" Color="#C034C9E6" />
-            <SolidColorBrush x:Key="ShellToastForegroundBrush" Color="#FFF7FBFF" />
-            <SolidColorBrush x:Key="ShellToastIconForegroundBrush" Color="#FFE2EEFF" />
+            <SolidColorBrush x:Key="ShellToastBackgroundBrush" Color="#F0101820" />
+            <SolidColorBrush x:Key="ShellToastBorderBrush" Color="#B05AB4E8" />
+            <SolidColorBrush x:Key="ShellToastForegroundBrush" Color="#FFFFFFFF" />
+            <SolidColorBrush x:Key="ShellToastIconForegroundBrush" Color="#FFE8F4FC" />
+            <SolidColorBrush x:Key="ShellCriticalForegroundBrush" Color="#FFFF9A9A" />
 
-            <AcrylicBrush x:Key="ShellMenuFlyoutBackgroundBrush" TintColor="#16323A" TintOpacity="0.5" TintLuminosityOpacity="0.45" FallbackColor="#12252C" />
-            <SolidColorBrush x:Key="ShellMenuFlyoutBorderBrush" Color="#7034C9E6" />
-            <SolidColorBrush x:Key="ShellMenuFlyoutForegroundBrush" Color="#FFEFF6FF" />
-            <SolidColorBrush x:Key="ShellMenuFlyoutSecondaryForegroundBrush" Color="#A0BBD0E8" />
+            <AcrylicBrush x:Key="ShellMenuFlyoutBackgroundBrush" TintColor="#101820" TintOpacity="0.72" TintLuminosityOpacity="0.42" FallbackColor="#0E141A" />
+            <SolidColorBrush x:Key="ShellMenuFlyoutBorderBrush" Color="#70D0E0EC" />
+            <SolidColorBrush x:Key="ShellMenuFlyoutForegroundBrush" Color="#FFFFFFFF" />
+            <SolidColorBrush x:Key="ShellMenuFlyoutSecondaryForegroundBrush" Color="#FFC0D0E0" />
             <LinearGradientBrush x:Key="ShellMenuFlyoutItemHoverBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#A034C9E6" Offset="0" />
-                <GradientStop Color="#902C7F98" Offset="1" />
+                <GradientStop Color="#A05AB4E8" Offset="0" />
+                <GradientStop Color="#802A8AB8" Offset="1" />
             </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellMenuFlyoutItemHoverBorderBrush" Color="#FF34C9E6" />
+            <SolidColorBrush x:Key="ShellMenuFlyoutItemHoverBorderBrush" Color="#FF5AB4E8" />
             <LinearGradientBrush x:Key="ShellMenuFlyoutItemPressedBrush" StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#B82C9FBC" Offset="0" />
-                <GradientStop Color="#A01B7E96" Offset="1" />
+                <GradientStop Color="#B02A9AC0" Offset="0" />
+                <GradientStop Color="#98186078" Offset="1" />
             </LinearGradientBrush>
-            <SolidColorBrush x:Key="ShellMenuFlyoutSeparatorBrush" Color="#604FB0C8" />
+            <SolidColorBrush x:Key="ShellMenuFlyoutSeparatorBrush" Color="#60C0D4E0" />
         </ResourceDictionary>
 
         <!-- Section: HighContrast -->
@@ -425,8 +593,10 @@
             <SolidColorBrush x:Key="ShellTitleBarBorderBrush" Color="#FFFFFFFF" />
             <SolidColorBrush x:Key="ShellTitleBarForegroundBrush" Color="#FFFFFFFF" />
             <SolidColorBrush x:Key="ShellTitleBarSecondaryForegroundBrush" Color="#FFFFFFFF" />
+            <SolidColorBrush x:Key="ShellSecondaryForegroundBrush" Color="#FFFFFFFF" />
             <SolidColorBrush x:Key="ShellTitleBarButtonHoverBackgroundBrush" Color="#33FFFFFF" />
             <SolidColorBrush x:Key="ShellTitleBarButtonPressedBackgroundBrush" Color="#66FFFFFF" />
+            <SolidColorBrush x:Key="ShellTitleBarButtonInactiveForegroundBrush" Color="#99FFFFFF" />
 
             <SolidColorBrush x:Key="ShellTabStripBackgroundBrush" Color="#FF000000" />
             <SolidColorBrush x:Key="ShellTabStripBorderBrush" Color="#FFFFFFFF" />
@@ -441,6 +611,11 @@
             <SolidColorBrush x:Key="ShellButtonBackgroundBrush" Color="#FF000000" />
             <SolidColorBrush x:Key="ShellButtonBorderBrush" Color="#FFFFFFFF" />
             <SolidColorBrush x:Key="ShellButtonForegroundBrush" Color="#FFFFFFFF" />
+            <SolidColorBrush x:Key="BreadcrumbBarNormalForegroundBrush" Color="#FFFFFFFF" />
+            <SolidColorBrush x:Key="BreadcrumbBarHoverForegroundBrush" Color="#FFFFFF00" />
+            <SolidColorBrush x:Key="BreadcrumbBarPressedForegroundBrush" Color="#FFFFFF00" />
+            <SolidColorBrush x:Key="BreadcrumbBarCurrentNormalForegroundBrush" Color="#FFFFFFFF" />
+            <SolidColorBrush x:Key="BreadcrumbBarForegroundBrush" Color="#FFFFFFFF" />
             <SolidColorBrush x:Key="ShellInputBackgroundBrush" Color="#FF000000" />
             <SolidColorBrush x:Key="ShellInputBorderBrush" Color="#FFFFFFFF" />
             <SolidColorBrush x:Key="ShellCommandStripBackgroundBrush" Color="#FF000000" />
@@ -455,11 +630,21 @@
             <SolidColorBrush x:Key="ShellSurfaceBorderBrush" Color="#FFFFFFFF" />
             <SolidColorBrush x:Key="ShellSubtleBorderBrush" Color="#FFFFFFFF" />
             <SolidColorBrush x:Key="ShellSplitterBrush" Color="#FFFFFFFF" />
+            <SolidColorBrush x:Key="ShellSplitterHoverBrush" Color="#FFFFFF00" />
+            <SolidColorBrush x:Key="ScrollBarThumbFill" Color="#FFFFFFFF" />
+            <SolidColorBrush x:Key="ScrollBarThumbFillPointerOver" Color="#FFFFFF00" />
+            <SolidColorBrush x:Key="ScrollBarThumbFillPressed" Color="#FFFFFF00" />
+            <SolidColorBrush x:Key="ScrollBarThumbFillDisabled" Color="#88FFFFFF" />
+            <SolidColorBrush x:Key="ScrollBarButtonArrowForeground" Color="#FFFFFFFF" />
+            <SolidColorBrush x:Key="ScrollBarButtonArrowForegroundPointerOver" Color="#FFFFFF00" />
+            <SolidColorBrush x:Key="ScrollBarButtonArrowForegroundPressed" Color="#FFFFFF00" />
+            <SolidColorBrush x:Key="ScrollBarPanningThumbBackground" Color="#FFFFFFFF" />
 
             <SolidColorBrush x:Key="ShellPanelHighlightStripBrush" Color="#00000000" />
             <SolidColorBrush x:Key="ShellAeroAccentGlowBrush" Color="#33FFFF00" />
             <SolidColorBrush x:Key="ShellAeroAccentGlowBorderBrush" Color="#FFFFFF00" />
             <SolidColorBrush x:Key="ShellGlossButtonHighlightBrush" Color="#00000000" />
+            <SolidColorBrush x:Key="ShellGlossCapBrush" Color="#00000000" />
             <SolidColorBrush x:Key="ShellButtonHoverBackgroundBrush" Color="#22FFFFFF" />
             <SolidColorBrush x:Key="ShellButtonPressedBackgroundBrush" Color="#44FFFFFF" />
             <SolidColorBrush x:Key="ShellListItemHoverBackgroundBrush" Color="#22FFFFFF" />
@@ -484,6 +669,7 @@
             <SolidColorBrush x:Key="ShellToastBorderBrush" Color="#FFFFFF00" />
             <SolidColorBrush x:Key="ShellToastForegroundBrush" Color="#FFFFFFFF" />
             <SolidColorBrush x:Key="ShellToastIconForegroundBrush" Color="#FFFFFF00" />
+            <SolidColorBrush x:Key="ShellCriticalForegroundBrush" Color="#FFFFFF00" />
 
             <SolidColorBrush x:Key="ShellMenuFlyoutBackgroundBrush" Color="#FF000000" />
             <SolidColorBrush x:Key="ShellMenuFlyoutBorderBrush" Color="#FFFFFFFF" />

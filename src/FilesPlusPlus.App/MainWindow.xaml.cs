@@ -61,6 +61,7 @@ public sealed partial class MainWindow : Window
         _appSettingsService = appSettingsService;
         _serviceProvider = serviceProvider;
         InitializeComponent();
+        ConfigurePreviewMediaTransport();
         RootGrid.DataContext = ViewModel;
         ViewModel.ResolveFileConflictAsync = ResolveFileConflictAsync;
         ConfigureSystemBackdrop();
@@ -114,6 +115,21 @@ public sealed partial class MainWindow : Window
         }
     }
 
+    // Why: Nested MediaTransportControls in XAML crashes WinUI XamlCompiler; configure compact chrome in code.
+    private void ConfigurePreviewMediaTransport()
+    {
+        PreviewMediaPlayer.TransportControls = new MediaTransportControls
+        {
+            IsCompact = true,
+            IsZoomButtonVisible = false,
+            IsZoomEnabled = false,
+            IsPlaybackRateButtonVisible = false,
+            IsRepeatButtonVisible = false,
+            IsSkipBackwardButtonVisible = false,
+            IsSkipForwardButtonVisible = false
+        };
+    }
+
     private void ConfigureWindowChrome()
     {
         if (_appWindow is null)
@@ -123,17 +139,18 @@ public sealed partial class MainWindow : Window
 
         _appWindow.Title = "Files++";
         ExtendsContentIntoTitleBar = true;
-        SetTitleBar(null);
+        // Why: Host-level title bar keeps brand/empty space draggable while tabs and + remain clickable.
+        SetTitleBar(TitleBarHost);
         _nonClientPointerSource = TryCreateNonClientPointerSource();
-        if (_nonClientPointerSource is null)
-        {
-            SetTitleBar(TitleBarDragRegion);
-        }
 
         if (!AppWindowTitleBar.IsCustomizationSupported())
         {
             return;
         }
+
+        var titleBar = _appWindow.TitleBar;
+        // Why: Standard caption height keeps the title strip compact; Tall made chrome feel oversized.
+        titleBar.PreferredHeightOption = TitleBarHeightOption.Standard;
 
         _appWindow.Changed -= AppWindow_Changed;
         _appWindow.Changed += AppWindow_Changed;
@@ -189,6 +206,8 @@ public sealed partial class MainWindow : Window
         }
 
         var titleBar = _appWindow.TitleBar;
+        titleBar.PreferredHeightOption = TitleBarHeightOption.Standard;
+
         var scale = RootGrid.XamlRoot?.RasterizationScale ?? 1.0;
         if (scale <= 0)
         {
@@ -196,7 +215,16 @@ public sealed partial class MainWindow : Window
         }
 
         TitleBarLeftInsetColumn.Width = new GridLength(titleBar.LeftInset / scale);
-        TitleBarRightInsetColumn.Width = new GridLength(titleBar.RightInset / scale);
+        TitleBarRightInsetColumn.Width = new GridLength(Math.Max(titleBar.RightInset / scale, 138));
+
+        // Why: Match custom title row to the live caption height so glass sits flush under min/max/close.
+        var captionHeight = titleBar.Height / scale;
+        if (captionHeight < 28)
+        {
+            captionHeight = 32;
+        }
+
+        TitleBarRowDefinition.Height = new GridLength(captionHeight);
         ApplyTitleBarButtonColors(titleBar);
         UpdateTitleBarDragRegion();
     }
@@ -210,6 +238,7 @@ public sealed partial class MainWindow : Window
 
         try
         {
+            // Why: Only the empty strip is a non-client caption; interactive tab/brand controls stay client-side.
             if (TryGetWindowRect(TitleBarDragRegion, out var dragRegion))
             {
                 _nonClientPointerSource.SetRegionRects(NonClientRegionKind.Caption, [dragRegion]);
@@ -266,18 +295,21 @@ public sealed partial class MainWindow : Window
     {
         var buttonForeground = TryGetThemeColor(
             "ShellTitleBarForegroundBrush",
-            Windows.UI.Color.FromArgb(0xFF, 0x2A, 0x2F, 0x3D));
+            Windows.UI.Color.FromArgb(0xFF, 0xF4, 0xF8, 0xFC));
+        var buttonInactiveForeground = TryGetThemeColor(
+            "ShellTitleBarButtonInactiveForegroundBrush",
+            Windows.UI.Color.FromArgb(0x90, 0xB0, 0xC0, 0xD0));
         var buttonHoverBackground = TryGetThemeColor(
             "ShellTitleBarButtonHoverBackgroundBrush",
-            Windows.UI.Color.FromArgb(0x24, 0x28, 0x4C, 0x95));
+            Windows.UI.Color.FromArgb(0x55, 0xFF, 0xFF, 0xFF));
         var buttonPressedBackground = TryGetThemeColor(
             "ShellTitleBarButtonPressedBackgroundBrush",
-            Windows.UI.Color.FromArgb(0x36, 0x28, 0x4C, 0x95));
+            Windows.UI.Color.FromArgb(0x70, 0xA8, 0xD4, 0xE8));
 
         titleBar.ButtonBackgroundColor = Microsoft.UI.Colors.Transparent;
         titleBar.ButtonInactiveBackgroundColor = Microsoft.UI.Colors.Transparent;
         titleBar.ButtonForegroundColor = buttonForeground;
-        titleBar.ButtonInactiveForegroundColor = buttonForeground;
+        titleBar.ButtonInactiveForegroundColor = buttonInactiveForeground;
         titleBar.ButtonHoverBackgroundColor = buttonHoverBackground;
         titleBar.ButtonHoverForegroundColor = buttonForeground;
         titleBar.ButtonPressedBackgroundColor = buttonPressedBackground;
@@ -299,6 +331,29 @@ public sealed partial class MainWindow : Window
         if (RootGrid.Resources.TryGetValue(resourceKey, out var rootValue) && rootValue is SolidColorBrush rootBrush)
         {
             return rootBrush;
+        }
+
+        var themeKey = RootGrid.ActualTheme switch
+        {
+            ElementTheme.Light => "Light",
+            ElementTheme.Dark => "Dark",
+            _ => Application.Current.RequestedTheme == ApplicationTheme.Dark ? "Dark" : "Light"
+        };
+
+        if (Application.Current.Resources.ThemeDictionaries.TryGetValue(themeKey, out var themeDictObj) &&
+            themeDictObj is ResourceDictionary themeDict &&
+            themeDict.TryGetValue(resourceKey, out var themeValue) &&
+            themeValue is SolidColorBrush themeBrush)
+        {
+            return themeBrush;
+        }
+
+        if (Application.Current.Resources.ThemeDictionaries.TryGetValue("Default", out var defaultDictObj) &&
+            defaultDictObj is ResourceDictionary defaultDict &&
+            defaultDict.TryGetValue(resourceKey, out var defaultValue) &&
+            defaultValue is SolidColorBrush defaultBrush)
+        {
+            return defaultBrush;
         }
 
         if (Application.Current.Resources.TryGetValue(resourceKey, out var appValue) && appValue is SolidColorBrush appBrush)
@@ -719,7 +774,7 @@ public sealed partial class MainWindow : Window
         RunUiAction("Create folder", () => ViewModel.CreateFolderAsync());
     }
 
-    private void NewSplitButton_Click(SplitButton sender, SplitButtonClickEventArgs args)
+    private void NewSplitButton_Click(object sender, RoutedEventArgs e)
     {
         RunUiAction("Create folder", () => ViewModel.CreateFolderAsync());
     }
@@ -877,6 +932,7 @@ public sealed partial class MainWindow : Window
                 DefaultButton = ContentDialogButton.Primary,
                 XamlRoot = RootGrid.XamlRoot
             };
+            ApplyShellDialogChrome(dialog);
 
             await dialog.ShowAsync();
         }
@@ -908,6 +964,7 @@ public sealed partial class MainWindow : Window
             DefaultButton = ContentDialogButton.Close,
             XamlRoot = RootGrid.XamlRoot
         };
+        ApplyShellDialogChrome(dialog);
 
         var result = await dialog.ShowAsync();
         return result switch
@@ -975,6 +1032,7 @@ public sealed partial class MainWindow : Window
             DefaultButton = ContentDialogButton.Primary,
             XamlRoot = RootGrid.XamlRoot
         };
+        ApplyShellDialogChrome(dialog);
 
         await dialog.ShowAsync();
     }
@@ -1187,6 +1245,7 @@ public sealed partial class MainWindow : Window
                 DefaultButton = ContentDialogButton.Close,
                 XamlRoot = RootGrid.XamlRoot
             };
+            ApplyShellDialogChrome(dialog);
 
             var result = await dialog.ShowAsync();
             if (result != ContentDialogResult.Primary)
@@ -1323,6 +1382,7 @@ public sealed partial class MainWindow : Window
     private void SortName_Click(object sender, RoutedEventArgs e) => ViewModel.SortCurrent(SortColumn.Name);
     private void SortType_Click(object sender, RoutedEventArgs e) => ViewModel.SortCurrent(SortColumn.Type);
     private void SortDate_Click(object sender, RoutedEventArgs e) => ViewModel.SortCurrent(SortColumn.DateModified);
+    private void SortSize_Click(object sender, RoutedEventArgs e) => ViewModel.SortCurrent(SortColumn.Size);
 
     // Section: Window layout helpers
 
@@ -1678,6 +1738,7 @@ public sealed partial class MainWindow : Window
             DefaultButton = ContentDialogButton.Primary,
             XamlRoot = RootGrid.XamlRoot
         };
+        ApplyShellDialogChrome(dialog);
 
         var result = await dialog.ShowAsync();
         if (result != ContentDialogResult.Primary)
@@ -1864,10 +1925,107 @@ public sealed partial class MainWindow : Window
             _ => ElementTheme.Default
         };
 
-        if (TryParseAccentColor(settings.Appearance.AccentHex, out var color) && Application.Current?.Resources is { } resources)
+        Color? accent = TryParseAccentColor(settings.Appearance.AccentHex, out var parsed) ? parsed : null;
+        if (accent is { } color && Application.Current?.Resources is { } resources)
         {
-            resources["ShellAccentBrush"] = new SolidColorBrush(color);
+            ApplyAccentBrushes(resources, color);
+            ApplyTreeViewAccentWashes(color);
         }
+
+        _backdropController?.ApplyAccentTint(accent, RootGrid.ActualTheme);
+        UpdateTitleBarLayout();
+    }
+
+    private static void ApplyAccentBrushes(ResourceDictionary resources, Color color)
+    {
+        var opaque = Color.FromArgb(0xFF, color.R, color.G, color.B);
+        var mid = Color.FromArgb(0xFF,
+            (byte)Math.Clamp(color.R + 40, 0, 255),
+            (byte)Math.Clamp(color.G + 30, 0, 255),
+            (byte)Math.Clamp(color.B + 20, 0, 255));
+        var light = Color.FromArgb(0xFF,
+            (byte)Math.Clamp(color.R + 90, 0, 255),
+            (byte)Math.Clamp(color.G + 70, 0, 255),
+            (byte)Math.Clamp(color.B + 40, 0, 255));
+        var dark = Color.FromArgb(0xFF,
+            (byte)Math.Clamp(color.R - 30, 0, 255),
+            (byte)Math.Clamp(color.G - 25, 0, 255),
+            (byte)Math.Clamp(color.B - 20, 0, 255));
+
+        resources["ShellAccentBrush"] = new SolidColorBrush(opaque);
+        resources["FilesPlusPlusAccentBrush"] = new SolidColorBrush(opaque);
+        resources["ShellAeroAccentGlowBorderBrush"] = new SolidColorBrush(opaque);
+        resources["ShellTabSelectedBorderBrush"] = new SolidColorBrush(Color.FromArgb(0xA0, opaque.R, opaque.G, opaque.B));
+        resources["ShellTabIndicatorBrush"] = new SolidColorBrush(opaque);
+        resources["ShellSelectionBorderBrush"] = new SolidColorBrush(Color.FromArgb(0xC0, opaque.R, opaque.G, opaque.B));
+        resources["ShellListItemHoverBorderBrush"] = new SolidColorBrush(Color.FromArgb(0x80, opaque.R, opaque.G, opaque.B));
+        // Why: Caption hover stays soft glass-white; pressed picks up accent so min/max/close feel Aero, not neon.
+        resources["ShellTitleBarButtonHoverBackgroundBrush"] = new SolidColorBrush(Color.FromArgb(0x55, 0xFF, 0xFF, 0xFF));
+        resources["ShellTitleBarButtonPressedBackgroundBrush"] = new SolidColorBrush(Color.FromArgb(0x70, opaque.R, opaque.G, opaque.B));
+        resources["ShellSplitterHoverBrush"] = new SolidColorBrush(Color.FromArgb(0xC0, opaque.R, opaque.G, opaque.B));
+        resources["ScrollBarThumbFillPointerOver"] = new SolidColorBrush(Color.FromArgb(0xC0, opaque.R, opaque.G, opaque.B));
+        resources["ScrollBarThumbFillPressed"] = new SolidColorBrush(Color.FromArgb(0xE0, opaque.R, opaque.G, opaque.B));
+        resources["ShellToastBorderBrush"] = new SolidColorBrush(Color.FromArgb(0xC0, opaque.R, opaque.G, opaque.B));
+        resources["ShellMenuFlyoutItemHoverBorderBrush"] = new SolidColorBrush(opaque);
+
+        resources["ShellAeroAccentGlowBrush"] = CreateVerticalGradient(
+            Color.FromArgb(0x70, mid.R, mid.G, mid.B),
+            Color.FromArgb(0x40, opaque.R, opaque.G, opaque.B));
+        resources["ShellSelectionBackgroundBrush"] = CreateVerticalGradient(
+            Color.FromArgb(0xA0, mid.R, mid.G, mid.B),
+            Color.FromArgb(0x70, opaque.R, opaque.G, opaque.B),
+            Color.FromArgb(0x58, dark.R, dark.G, dark.B));
+        resources["ShellCommandPrimaryButtonBackgroundBrush"] = CreateVerticalGradient(
+            light, mid, opaque, dark);
+        resources["ShellListItemHoverBackgroundBrush"] = CreateVerticalGradient(
+            Color.FromArgb(0x78, light.R, light.G, light.B),
+            Color.FromArgb(0x48, mid.R, mid.G, mid.B));
+    }
+
+    private void ApplyTreeViewAccentWashes(Color color)
+    {
+        if (NavigationTreeView?.Resources is not { } treeResources)
+        {
+            return;
+        }
+
+        var opaque = Color.FromArgb(0xFF, color.R, color.G, color.B);
+        var mid = Color.FromArgb(0xFF,
+            (byte)Math.Clamp(color.R + 40, 0, 255),
+            (byte)Math.Clamp(color.G + 30, 0, 255),
+            (byte)Math.Clamp(color.B + 20, 0, 255));
+        var dark = Color.FromArgb(0xFF,
+            (byte)Math.Clamp(color.R - 30, 0, 255),
+            (byte)Math.Clamp(color.G - 25, 0, 255),
+            (byte)Math.Clamp(color.B - 20, 0, 255));
+
+        treeResources["TreeViewItemBackgroundSelected"] = new SolidColorBrush(Color.FromArgb(0x58, opaque.R, opaque.G, opaque.B));
+        treeResources["TreeViewItemBackgroundSelectedPointerOver"] = new SolidColorBrush(Color.FromArgb(0x70, mid.R, mid.G, mid.B));
+        treeResources["TreeViewItemBackgroundSelectedPressed"] = new SolidColorBrush(Color.FromArgb(0x80, dark.R, dark.G, dark.B));
+        treeResources["TreeViewItemBackgroundPointerOver"] = new SolidColorBrush(Color.FromArgb(0x34, opaque.R, opaque.G, opaque.B));
+        treeResources["TreeViewItemBackgroundPressed"] = new SolidColorBrush(Color.FromArgb(0x48, opaque.R, opaque.G, opaque.B));
+    }
+
+    private static LinearGradientBrush CreateVerticalGradient(params Color[] stops)
+    {
+        var brush = new LinearGradientBrush
+        {
+            StartPoint = new Windows.Foundation.Point(0, 0),
+            EndPoint = new Windows.Foundation.Point(0, 1)
+        };
+
+        if (stops.Length == 0)
+        {
+            return brush;
+        }
+
+        for (var i = 0; i < stops.Length; i++)
+        {
+            var offset = stops.Length == 1 ? 0 : (double)i / (stops.Length - 1);
+            brush.GradientStops.Add(new GradientStop { Color = stops[i], Offset = offset });
+        }
+
+        return brush;
     }
 
     private static bool TryParseAccentColor(string? hex, out Color color)
@@ -1924,5 +2082,32 @@ public sealed partial class MainWindow : Window
 
         _settingsWindow.Closed -= SettingsWindow_Closed;
         _settingsWindow = null;
+    }
+
+    // Why: ContentDialog defaults to Fluent acrylic; re-skin to match shell glass surfaces.
+    private void ApplyShellDialogChrome(ContentDialog dialog)
+    {
+        dialog.RequestedTheme = RootGrid.ActualTheme;
+        dialog.CornerRadius = new CornerRadius(8);
+        dialog.BorderThickness = new Thickness(1);
+        dialog.BorderBrush = TryGetThemeBrush("ShellSurfaceBorderBrush");
+        dialog.Background = TryGetThemeBrush("ShellSurfaceBackgroundBrush");
+        dialog.Foreground = TryGetThemeBrush("ShellButtonForegroundBrush");
+
+        dialog.Resources["ContentDialogBackground"] = TryGetThemeBrush("ShellSurfaceBackgroundBrush");
+        dialog.Resources["ContentDialogBorderBrush"] = TryGetThemeBrush("ShellSurfaceBorderBrush");
+        dialog.Resources["ContentDialogForeground"] = TryGetThemeBrush("ShellButtonForegroundBrush");
+        dialog.Resources["ContentDialogTopOverlay"] = TryGetThemeBrush("ShellPanelTopSheenBrush");
+        dialog.Resources["ContentDialogSmokeFillColor"] = Color.FromArgb(0x66, 0x00, 0x00, 0x00);
+    }
+
+    private static Brush TryGetThemeBrush(string key)
+    {
+        if (Application.Current.Resources.TryGetValue(key, out var value) && value is Brush brush)
+        {
+            return brush;
+        }
+
+        return new SolidColorBrush(Microsoft.UI.Colors.Transparent);
     }
 }
