@@ -16,7 +16,7 @@
     "pack:msi:vs": "powershell -NoProfile -ExecutionPolicy Bypass -Command \"& 'C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\Common7\\Tools\\Launch-VsDevShell.ps1' -SkipAutomaticLocation; powershell -ExecutionPolicy Bypass -File scripts/build-msi.ps1\"",
     "pack:all": "npm run pack:msix && npm run pack:msi",
     "pack:all:vs": "npm run pack:msix:vs && npm run pack:msi:vs",
-    "release:github": "node scripts/release-github.mjs",
+    "release:github": "npm ci && node scripts/release-github.mjs",
     "wc": "npm run win-compiler:x64",
     "win-compiler:x64": "powershell -NoProfile -ExecutionPolicy Bypass -NoExit -Command \"& 'C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\Common7\\Tools\\Launch-VsDevShell.ps1' -SkipAutomaticLocation\"",
     "win-compiler:arm64": "powershell -NoProfile -ExecutionPolicy Bypass -NoExit -Command \"& 'C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\Common7\\Tools\\Launch-VsDevShell.ps1' -SkipAutomaticLocation -Arch arm64 -HostArch amd64\""
