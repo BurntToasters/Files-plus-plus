@@ -2,6 +2,10 @@
   "name": "files-plus-plus-release",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": "^24.22.1 || >=26.13.0",
+    "npm": ">=12.2.1"
+  },
   "scripts": {
     "assets:generate": "powershell -ExecutionPolicy Bypass -File scripts/generate-app-assets.ps1",
     "build": "dotnet build src/FilesPlusPlus.Core/FilesPlusPlus.Core.csproj -c Release && dotnet build src/FilesPlusPlus.App/FilesPlusPlus.App.csproj -c Release && dotnet build tests/FilesPlusPlus.Core.Tests/FilesPlusPlus.Core.Tests.csproj -c Release",
